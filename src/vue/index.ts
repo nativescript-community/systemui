@@ -1,7 +1,7 @@
 const Plugin = {
     install(Vue) {
-        Vue.registerElement('StatusBar', () => require('../statusbar').StatusBar, {});
-        Vue.registerElement('NavigationBar', () => require('../statusbar').NavigationBar, {});
+        Vue.registerElement('StatusBar', () => require('../systemui').StatusBar, {});
+        Vue.registerElement('NavigationBar', () => require('../systemui').NavigationBar, {});
     }
 };
 
