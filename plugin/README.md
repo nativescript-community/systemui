@@ -1,6 +1,6 @@
-# NativeScript Status Bar
+# NativeScript System UI
 
-A NativeScript plugin to change the style of the status bar.
+A NativeScript plugin to change System UI.
 
 ## Usage
 
@@ -24,39 +24,35 @@ iOS only supports a list of settings (default, light, dark, opaque), not a speci
            opaque
       -->
       <x:StatusBar ios:barStyle="light" barColor="#00A7DC" />
+      <x:NavigationBar barColor="#00A7DC" />
 </Page>
 ````
 
 Those settings, combined with an ActionBar that has `background-color: #00C0F5` will give you...
 
-![status-bar-light](https://cdn.rawgit.com/burkeholland/nativescript-systemui/master/images/status-bar-ios-android.png)
+![status-bar-light](https://cdn.rawgit.com/Akylas/nativescript-systemui/master/images/status-bar-ios-android.png)
 
-**Note** The StatusBar plugin will not set the color of the StatusBar on iOS if you don't have an ActionBar as well. If you want to set the color of the StatusBar in NativeScript without having an ActionBar, you can set it to the page background color by setting `backgroundSpanUnderStatusBar="true"`. Otherwise you will have a white StatusBar no matter what you do. 
+**Note** The SystemUI plugin will not set the color of the StatusBar on iOS if you don't have an ActionBar as well. If you want to set the color of the StatusBar in NativeScript without having an ActionBar, you can set it to the page background color by setting `backgroundSpanUnderStatusBar="true"`. Otherwise you will have a white StatusBar no matter what you do. 
 
 ## With Vue.js
 
 In your root `app.js`:
 
 ```
-Vue.registerElement('StatusBar', () => require('nativescript-systemui').StatusBar)
+import StatusBarPlugin from 'nativescript-systemui/vue';
+Vue.use(StatusBarPlugin);
 ```
 
 In your component:
 ```html
 <Page class="page" actionBarHidden="true" backgroundSpanUnderStatusBar="true">
       <StatusBar barColor="#32475b" />
+      <NavigationBar barColor="#32475b" />
 <Page/>
 ```
 
 That's is.
 
-## Webpack
-
-To use the NativeScript status bar plugin with webpack, you must add the following line of code to your app’s `app/bundle-config.js` file.
-
-``` JavaScript
-global.registerModule("nativescript-systemui", function() { return require("nativescript-systemui"); });
-```
 
 ## Development workflow
 

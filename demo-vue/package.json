@@ -1,0 +1,30 @@
+{
+    "description": "NativeScript StatusBar Demo for Vue",
+    "license": "SEE LICENSE IN LICENSE.md",
+    "readme": "README.md",
+    "repository": "http://www.github.com/Akylas/nativescript-systemui.git",
+    "nativescript": {
+        "id": "org.nativescript.demovuestatusbar",
+        "tns-android": {
+            "version": "6.0.1"
+        }
+    },
+    "dependencies": {
+        "@tweenjs/tween.js": "17.4.0",
+        "nativescript-systemui": "file:../plugin",
+        "akylas-nativescript-vue": "^2.1.14",
+        "nativescript-vue": "^2.4.0",
+        "tns-core-modules": "^6.0.3"
+    },
+    "devDependencies": {
+        "nativescript-akylas-webpack-template": "0.2.3",
+        "nativescript-dev-webpack": "~1.0.2",
+        "tns-platform-declarations": "^6.0.3",
+        "typescript": "^3.5.3",
+        "vue": "^2.6.10",
+        "vue-property-decorator": "^8.2.1"
+    },
+    "scripts": {
+        "tslint": "npm i && tslint --config '../tslint.json' 'app/**/*.ts' --exclude '**/node_modules/**'"
+    }
+}
