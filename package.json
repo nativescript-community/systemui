@@ -2,17 +2,14 @@
     "name": "nativescript-systemui",
     "version": "5.0.0",
     "scripts": {
-        "tsc": "cp src/statusbar.d.ts plugin && cp README.md plugin && tsc -skipLibCheck",
-        "build": "npm i && npm run tsc",
-        "demo.ios": "npm i && npm run tsc && cd demo && tns run ios",
-        "demo.android": "npm i && npm run tsc && cd demo && tns run android",
+        "tsc": "cp src/systemui.d.ts plugin && cp README.md plugin && tsc -skipLibCheck",
+        "build": "pnpm i && pnpm run tsc",
+        "demo.ios": "pnpm i && pnpm run tsc && cd demo && tns run ios",
+        "demo.android": "pnpm i && pnpm run tsc && cd demo && tns run android",
         "clean.demo": "rimraf demo/hooks demo/node_modules demo/platforms",
         "clean": "rimraf plugin/ios plugin/android plugin/**/*.d.ts plugin/**/*.js plugin/**/*.js.map plugin/node_modules plugin/package-lock.json",
-        "plugin.watch.tsc": "npm run tsc -- -w",
-        "plugin.watch.android": "npm i && npm-watch build.android",
-        "plugin.watch.ios": "npm i && npm-watch build.ios",
-        "plugin.watch": "npm run plugin.watch.tsc & npm run plugin.watch.android & npm run plugin.watch.ios",
-        "publish": "npm run build && lerna publish",
+        "plugin.watch": "pnpm run tsc -- -w",
+        "publish": "pnpm run build && lerna publish",
         "commitmsg": "commitlint -e $GIT_PARAMS"
     },
     "devDependencies": {
