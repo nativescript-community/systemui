@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.3](https://github.com/Akylas/nativescript-systemui/compare/v0.0.2...v0.0.3) (2019-10-11)
+
+
+### Bug Fixes
+
+* default values should not be null but 0 on android ([81a6aa1](https://github.com/Akylas/nativescript-systemui/commit/81a6aa10954562e095ab08961539a2e4cd604421))
+
+
+
+
+
 ## [0.0.2](https://github.com/Akylas/nativescript-systemui/compare/v0.0.1...v0.0.2) (2019-07-31)
 
 
