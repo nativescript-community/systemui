@@ -14,7 +14,7 @@ export class StatusBar extends common.StatusBar {
     updateBarColor(value: Color) {
         if (isPostLollipop) {
             const window = getWindow();
-            window.setStatusBarColor(value ? value.android : null);
+            window.setStatusBarColor(value ? value.android : 0);
         }
     }
     updateBarStyle(value) {}
@@ -36,7 +36,7 @@ export class NavigationBar extends common.NavigationBar {
     updateBarColor(value: Color) {
         if (isPostLollipop) {
             const window = app.android.foregroundActivity.getWindow() as android.view.Window;
-            window.setNavigationBarColor(value ? value.android : null);
+            window.setNavigationBarColor(value ? value.android : 0);
         }
     }
 }
