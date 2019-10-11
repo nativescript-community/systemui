@@ -4,7 +4,7 @@ import * as app from 'tns-core-modules/application';
 import { device } from 'tns-core-modules/platform';
 import lazy from 'tns-core-modules/utils/lazy';
 
-const isPostLollipop = lazy(() => parseInt(device.sdkVersion, 10) >= 21);
+const isPostLollipop = lazy(() => android.os.Build.VERSION.SDK_INT >= 21);
 
 function getWindow() {
     return app.android.foregroundActivity.getWindow() as android.view.Window;
