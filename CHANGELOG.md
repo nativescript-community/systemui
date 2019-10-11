@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.4](https://github.com/Akylas/nativescript-systemui/compare/v0.0.3...v0.0.4) (2019-10-11)
+
+
+### Bug Fixes
+
+* wrong lollipop check ([5464f0b](https://github.com/Akylas/nativescript-systemui/commit/5464f0b72a44d8e6d06ae541c2571b7594f521bb))
+
+
+
+
+
 ## [0.0.3](https://github.com/Akylas/nativescript-systemui/compare/v0.0.2...v0.0.3) (2019-10-11)
 
 
