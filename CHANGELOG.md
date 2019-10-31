@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.6](https://github.com/Akylas/nativescript-systemui/compare/v0.0.5...v0.0.6) (2019-10-31)
+
+
+### Bug Fixes
+
+* lazy check fix ([ba891fa](https://github.com/Akylas/nativescript-systemui/commit/ba891fa7be1d98eeb57ff20ce2061010654c6e12))
+
+
+
+
+
 ## [0.0.5](https://github.com/Akylas/nativescript-systemui/compare/v0.0.4...v0.0.5) (2019-10-31)
 
 
