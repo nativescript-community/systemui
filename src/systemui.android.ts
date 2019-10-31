@@ -20,7 +20,7 @@ function getWindow() {
 
 export class StatusBar extends common.StatusBar {
     updateBarColor(value: Color) {
-        if (isPostLollipop) {
+        if (isPostLollipop()) {
             const window = getWindow();
             window.setStatusBarColor(value ? value.android : 0);
         }
@@ -47,7 +47,7 @@ function findTopView(view: View) {
 }
 export class NavigationBar extends common.NavigationBar {
     updateBarColor(value: Color) {
-        if (isPostLollipop) {
+        if (isPostLollipop()) {
             let window;
             const topFrame = topmost();
             const topView = findTopView(topFrame);
