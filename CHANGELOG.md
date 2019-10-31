@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.5](https://github.com/Akylas/nativescript-systemui/compare/v0.0.4...v0.0.5) (2019-10-31)
+
+
+### Bug Fixes
+
+* working navbar colors with dialogs on android ([47285b1](https://github.com/Akylas/nativescript-systemui/commit/47285b1d96bac7ad4bdaee143e4fb25082f68f1a))
+
+
+
+
+
 ## [0.0.4](https://github.com/Akylas/nativescript-systemui/compare/v0.0.3...v0.0.4) (2019-10-11)
 
 
