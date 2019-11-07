@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/Akylas/nativescript-systemui/compare/v0.0.6...v0.0.7) (2019-11-07)
+
+
+### Bug Fixes
+
+* ios statusbar color for modals ([1fc21c7](https://github.com/Akylas/nativescript-systemui/commit/1fc21c7a0ddd9b9d9b880c99b7c4c848504969fe))
+
+
+
+
+
 ## [0.0.6](https://github.com/Akylas/nativescript-systemui/compare/v0.0.5...v0.0.6) (2019-10-31)
 
 
