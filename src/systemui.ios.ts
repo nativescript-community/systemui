@@ -2,18 +2,21 @@ import * as common from './systemui-common';
 import * as frame from 'tns-core-modules/ui/frame';
 import { Color } from 'tns-core-modules/color';
 
-let StatusBarView: UIView;
+const STATUSBAR_VIEW_TAG = 3245411;
 
 export class StatusBar extends common.StatusBar {
     private getStatusBarView() {
-        if (!StatusBarView) {
-            const statusBarFrame = UIApplication.sharedApplication.statusBarFrame;
-            StatusBarView = UIView.alloc().initWithFrame(statusBarFrame);
-            StatusBarView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleBottomMargin;
-            StatusBarView.autoresizesSubviews = true;
-            frame.topmost().ios.controller.view.superview.addSubview(StatusBarView);
+        const topView = frame.topmost().ios.controller.view.superview;
+        let statusBarView = topView.viewWithTag(STATUSBAR_VIEW_TAG);
+        if (!statusBarView) {
+            var statusBarFrame = UIApplication.sharedApplication.statusBarFrame;
+            statusBarView = UIView.alloc().initWithFrame(statusBarFrame);
+            statusBarView.tag = STATUSBAR_VIEW_TAG;
+            statusBarView.autoresizingMask = 2 /* FlexibleWidth */ | 32 /* FlexibleBottomMargin */;
+            statusBarView.autoresizesSubviews = true;
+            topView.addSubview(statusBarView);
         }
-        return StatusBarView;
+        return statusBarView;
     }
 
     updateBarColor(value: Color) {
