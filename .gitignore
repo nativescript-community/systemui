@@ -71,3 +71,4 @@ AoT files
 demo-angular/e2e/reports/**/*
 test-results.xml
 demo/e2e/reports/**/*
+/plugin/README.md
