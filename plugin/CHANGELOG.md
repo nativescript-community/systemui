@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/Akylas/nativescript-systemui/compare/v0.0.7...v1.0.0) (2019-11-07)
+
+
+### Bug Fixes
+
+* cleanup ([6aea9e5](https://github.com/Akylas/nativescript-systemui/commit/6aea9e5da7ae23bb58b47bf5a1670bedb58408a3))
+
+
+
+
+
 ## [0.0.7](https://github.com/Akylas/nativescript-systemui/compare/v0.0.6...v0.0.7) (2019-11-07)
 
 **Note:** Version bump only for package nativescript-systemui
