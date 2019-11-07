@@ -1,67 +1,117 @@
-import * as definition from './systemui';
-import { Property, View } from 'tns-core-modules/ui/core/view';
 import { Color } from 'tns-core-modules/color';
+import { CssProperty } from 'tns-core-modules/ui/core/properties';
+import { View } from 'tns-core-modules/ui/core/view';
+import { Style } from 'tns-core-modules/ui/styling/style';
 
-enum BarStyle {
-    default,
-    light,
-    dark,
-    opaque
+export function applyMixins(
+    derivedCtor: any,
+    baseCtors: any[],
+    options?: {
+        after?: boolean;
+        override?: boolean;
+        omit?: Array<string | symbol>;
+    }
+) {
+    const omits = options && options.omit ? options.omit : [];
+    baseCtors.forEach(baseCtor => {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+            if (omits.indexOf(name) !== -1) {
+                return;
+            }
+            const descriptor = Object.getOwnPropertyDescriptor(baseCtor.prototype, name);
+
+            if (name === 'constructor') return;
+            if (descriptor && (!descriptor.writable || !descriptor.configurable || !descriptor.enumerable || descriptor.get || descriptor.set)) {
+                Object.defineProperty(derivedCtor.prototype, name, descriptor);
+            } else {
+                const oldImpl = derivedCtor.prototype[name];
+                if (!oldImpl) {
+                    derivedCtor.prototype[name] = baseCtor.prototype[name];
+                } else {
+                    derivedCtor.prototype[name] = function(...args) {
+                        if (options) {
+                            if (!!options.override) {
+                                return baseCtor.prototype[name].apply(this, args);
+                            } else if (!!options.after) {
+                                oldImpl.apply(this, args);
+                                return baseCtor.prototype[name].apply(this, args);
+                            } else {
+                                baseCtor.prototype[name].apply(this, args);
+                                return oldImpl.apply(this, args);
+                            }
+                        } else {
+                            baseCtor.prototype[name].apply(this, args);
+                            return oldImpl.apply(this, args);
+                        }
+                    };
+                }
+            }
+        });
+        Object.getOwnPropertySymbols(baseCtor.prototype).forEach(symbol => {
+            if (omits.indexOf(symbol) !== -1) {
+                return;
+            }
+            const oldImpl: Function = derivedCtor.prototype[symbol];
+            if (!oldImpl) {
+                derivedCtor.prototype[symbol] = baseCtor.prototype[symbol];
+            } else {
+                derivedCtor.prototype[symbol] = function(...args) {
+                    if (options) {
+                        if (!!options.override) {
+                            return baseCtor.prototype[symbol].apply(this, args);
+                        } else if (!!options.after) {
+                            oldImpl.apply(this, args);
+                            return baseCtor.prototype[symbol].apply(this, args);
+                        } else {
+                            baseCtor.prototype[symbol].apply(this, args);
+                            return oldImpl.apply(this, args);
+                        }
+                    } else {
+                        baseCtor.prototype[symbol].apply(this, args);
+                        return oldImpl.apply(this, args);
+                    }
+                };
+            }
+        });
+    });
+}
+function createGetter(key) {
+    return function() {
+        return this.style[key];
+    };
+}
+function createSetter(key) {
+    return function(newVal) {
+        this.style[key] = newVal;
+    };
 }
 
-const onBarStylePropertyChanged = (view, oldValue, newValue) => {
-    try {
-        const statusbar = view as StatusBar;
-        const value = newValue;
-        setTimeout(() => {
-            statusbar.updateBarStyle(BarStyle[value]);
-        });
-    } catch (err) {
-        console.log(err);
-    }
+export const cssProperty = (target: Object, key: string | symbol) => {
+    Object.defineProperty(target, key, {
+        get: createGetter(key),
+        set: createSetter(key),
+        enumerable: true,
+        configurable: true
+    });
 };
-
-const onBarColorPropertyChanged = (view, oldValue, newValue) => {
-    try {
-        const statusbar = view as StatusBar | NavigationBar;
-        const value = newValue;
-        setTimeout(() => {
-            statusbar.updateBarColor(value);
-        });
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-export abstract class StatusBar extends View implements definition.StatusBar {
-    abstract updateBarColor(value: Color);
-    abstract updateBarStyle(value: string);
-    abstract show();
-
-    abstract hide();
-}
-export const barStyleProperty = new Property<StatusBar, string>({
-    name: 'barStyle',
-    valueChanged: onBarStylePropertyChanged
-});
-
-export const barColorProperty = new Property<StatusBar, Color>({
-    name: 'barColor',
+export const cssNavigationBarColorProperty = new CssProperty<Style, Color>({
+    name: 'navigationBarColor',
+    cssName: 'navigation-bar-color',
     equalityComparer: Color.equals,
-    valueChanged: onBarColorPropertyChanged,
     valueConverter: v => new Color(v)
 });
-barStyleProperty.register(StatusBar);
-barColorProperty.register(StatusBar);
-
-export abstract class NavigationBar extends View implements definition.NavigationBar {
-    abstract updateBarColor(value: Color);
-}
-
-export const navigationBarColorProperty = new Property<NavigationBar, Color>({
-    name: 'barColor',
+cssNavigationBarColorProperty.register(Style);
+export const cssStatusBarColorProperty = new CssProperty<Style, Color>({
+    name: 'statusBarColor',
+    cssName: 'status-bar-color',
     equalityComparer: Color.equals,
-    valueChanged: onBarColorPropertyChanged,
     valueConverter: v => new Color(v)
 });
-navigationBarColorProperty.register(NavigationBar);
+cssStatusBarColorProperty.register(Style);
+
+export function findTopView(view: View) {
+    while (view.parent) {
+        view = view.parent as View;
+    }
+    return view;
+}

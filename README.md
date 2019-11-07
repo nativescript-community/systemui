@@ -2,11 +2,30 @@
 
 A NativeScript plugin to change System UI.
 
+## IOS
+
+To show/hide the statusBar you need to have ```UIViewControllerBasedStatusBarAppearance``` set to ```false``` in your ```Info.plist```
+
 ## Usage
 
 ````
 npm install nativescript-systemui --save
 ````
+
+If you are using version ^1.0.0 then we now use mixins
+```ts
+import { installMixins } from 'nativescript-systemui';
+installMixins();
+```
+
+Then new properties are added to the ```Page``` class
+
+* ```statusBarColor``` (css property ```status-bar-color```)
+* ```navigationBarColor``` (css property ```navigation-bar-color```)
+
+
+## For versions < 1.0.0
+
 
 Then in your NativeScript project .xml file, add the namespace for the plugin. I'm calling it "x" here, but you can name it anything you want.
 
