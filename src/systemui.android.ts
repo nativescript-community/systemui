@@ -36,8 +36,9 @@ class PageExtended {
     [common.cssStatusBarColorProperty.setNative](color: Color) {
         if (isPostLollipop()) {
             let window;
-            const topFrame = topmost();
-            const topView = common.findTopView(topFrame);
+            // const topFrame = topmost();
+            // const topView = common.findTopView(topFrame);
+            const topView =(this as any).page;
             if (topView && topView._dialogFragment) {
                 const dialog = topView._dialogFragment.getDialog();
                 if (dialog) {
@@ -61,8 +62,8 @@ class PageExtended {
     [common.cssNavigationBarColorProperty.setNative](color: Color) {
         if (isPostLollipop()) {
             let window;
-            const topFrame = topmost();
-            const topView = common.findTopView(topFrame);
+            // const topFrame = topmost();
+            const topView =(this as any).page;
             if (topView && topView._dialogFragment) {
                 const dialog = topView._dialogFragment.getDialog();
                 if (dialog) {
