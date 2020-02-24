@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/Akylas/nativescript-systemui/compare/v1.0.1...v1.0.2) (2020-02-24)
+
+
+### Bug Fixes
+
+* **android:** override to fix non working props in {N} ([4d93f5a](https://github.com/Akylas/nativescript-systemui/commit/4d93f5ac8977672b719002ffb5af3d90aebc429c))
+
+
+
+
+
 ## [1.0.1](https://github.com/Akylas/nativescript-systemui/compare/v1.0.0...v1.0.1) (2020-02-18)
 
 
