@@ -1,7 +1,7 @@
-import { Color } from 'tns-core-modules/color';
-import { CssProperty } from 'tns-core-modules/ui/core/properties';
-import { View } from 'tns-core-modules/ui/core/view';
-import { Style } from 'tns-core-modules/ui/styling/style';
+import { Color } from '@nativescript/core/color';
+import { CssProperty } from '@nativescript/core/ui/core/properties';
+import { View } from '@nativescript/core/ui/core/view';
+import { Style } from '@nativescript/core/ui/styling/style';
 
 export function applyMixins(
     derivedCtor: any,

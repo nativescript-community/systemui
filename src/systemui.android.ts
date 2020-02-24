@@ -1,13 +1,11 @@
-import * as app from "tns-core-modules/application";
-import { Color } from "tns-core-modules/color";
-import { View } from "tns-core-modules/ui/core/view";
+import * as app from "@nativescript/core/application";
+import { Color } from "@nativescript/core/color";
+import { View } from "@nativescript/core/ui/core/view";
 import {
-    topmost,
     statusBarStyleProperty,
     androidStatusBarBackgroundProperty,
-    Page,
-} from "tns-core-modules/ui/frame";
-import lazy from "tns-core-modules/utils/lazy";
+} from "@nativescript/core/ui/page";
+import lazy from "@nativescript/core/utils/lazy";
 import {
     applyMixins,
     cssProperty,
@@ -21,18 +19,15 @@ const SYSTEM_UI_FLAG_LIGHT_STATUS_BAR = 0x00002000;
 const STATUS_BAR_LIGHT_BCKG = -657931;
 const STATUS_BAR_DARK_BCKG = 1711276032;
 
-declare module "tns-core-modules/ui/core/view" {
+declare module "@nativescript/core/ui/core/view" {
     interface View {
         _getFragmentManager(): androidx.fragment.app.FragmentManager;
         _dialogFragment: androidx.fragment.app.DialogFragment;
     }
 }
 
-function getWindow() {
-    return app.android.foregroundActivity.getWindow() as android.view.Window;
-}
 
-async function getPageWindow(view: View) {
+async function getPageWindow(view: View): Promise<android.view.Window> {
     const topView = view.page;
     if (topView && topView._dialogFragment) {
         const dialog = topView._dialogFragment.getDialog();
@@ -46,7 +41,7 @@ async function getPageWindow(view: View) {
             });
         }
     }
-    return app.android.foregroundActivity.getWindow();
+    return (<androidx.appcompat.app.AppCompatActivity>this._context).getWindow();
 }
 
 class PageExtended {
@@ -113,7 +108,7 @@ class PageExtended {
 
 let mixinInstalled = false;
 export function overridePageBase() {
-    const NSPage = require("tns-core-modules/ui/page").Page;
+    const NSPage = require("@nativescript/core/ui/page").Page;
     applyMixins(NSPage, [PageExtended]);
 }
 

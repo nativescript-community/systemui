@@ -18,7 +18,7 @@
         "nativescript-tween": "0.0.3",
         "akylas-nativescript-vue": "^2.1.14",
         "nativescript-vue": "^2.4.0",
-        "tns-core-modules": "^6.2.0"
+        "@nativescript/core": "^6.2.0"
     },
     "devDependencies": {
         "nativescript-akylas-webpack-template": "1.0.6",

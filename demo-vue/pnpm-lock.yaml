@@ -4,7 +4,7 @@ dependencies:
   nativescript-systemui: 'link:../plugin'
   nativescript-tween: 0.0.3
   nativescript-vue: 2.4.0
-  tns-core-modules: 6.2.0
+  @nativescript/core: 6.2.0
 devDependencies:
   nativescript-akylas-webpack-template: 1.0.6_5891932d6ebc78714447bdff52f14957
   nativescript-dev-webpack: 1.3.0_typescript@3.7.2
@@ -749,7 +749,7 @@ packages:
       nativescript-hook: 0.2.5
       reduce-css-calc: 2.1.7
       semver: 6.3.0
-      tns-core-modules-widgets: 6.2.0
+      @nativescript/core-widgets: 6.2.0
       tslib: 1.10.0
     dev: false
     requiresBuild: true
@@ -6428,11 +6428,11 @@ packages:
       node: '>=0.6.0'
     resolution:
       integrity: sha512-60aV6sgJ5YEbzUdn9c8kYGIqOubPoUdqQCul3SBAsRCZ40s6Y5cMcrW4dt3/k/EsbLVJNl9n6Vz3fTc+k2GeKQ==
-  /tns-core-modules-widgets/6.2.0:
+  /@nativescript/core-widgets/6.2.0:
     dev: false
     resolution:
       integrity: sha512-p/b2W6ioBsqnn6O1oFJfJC6SxP7yk11Qh7OYb4Bwn/7TTKHxmEhTRyKNe+9CJwTOtZjMsO9nLHyHuUGzZOB0/g==
-  /tns-core-modules/6.2.0:
+  /@nativescript/core/6.2.0:
     dependencies:
       '@nativescript/core': 6.2.0
     dev: false
@@ -7142,7 +7142,7 @@ specifiers:
   nativescript-systemui: 'file:../plugin'
   nativescript-tween: 0.0.3
   nativescript-vue: ^2.4.0
-  tns-core-modules: ^6.2.0
+  @nativescript/core: ^6.2.0
   tns-platform-declarations: ^6.2.0
   typescript: ^3.7.2
   vue: ^2.6.10

@@ -1,5 +1,5 @@
-import { Color } from 'tns-core-modules/color';
-import { View } from 'tns-core-modules/ui/core/view';
+import { Color } from '@nativescript/core/color';
+import { View } from '@nativescript/core/ui/core/view';
 import * as common from './systemui-common';
 
 const STATUSBAR_VIEW_TAG = 3245411;
@@ -74,7 +74,7 @@ class PageExtended {
 
 let mixinInstalled = false;
 export function overridePageBase() {
-    const NSPage = require('tns-core-modules/ui/page').Page;
+    const NSPage = require('@nativescript/core/ui/page').Page;
     common.applyMixins(NSPage, [PageExtended]);
 }
 

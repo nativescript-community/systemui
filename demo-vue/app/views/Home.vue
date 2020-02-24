@@ -19,9 +19,9 @@
 import Vue from "nativescript-vue";
 import { Component } from "vue-property-decorator";
 import { StatusBar } from "nativescript-systemui";
-import { Color } from "tns-core-modules/color";
+import { Color } from "@nativescript/core/color";
 import TWEEN from "nativescript-tween";
-import { Page } from "tns-core-modules/ui/page";
+import { Page } from "@nativescript/core/ui/page";
 
 @Component
 export default class Home extends Vue {
