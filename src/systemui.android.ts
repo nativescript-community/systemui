@@ -1,6 +1,6 @@
 import * as app from "@nativescript/core/application";
 import { Color } from "@nativescript/core/color";
-import { View } from "@nativescript/core/ui/core/view";
+import { View, ViewBase } from "@nativescript/core/ui/core/view";
 import {
     statusBarStyleProperty,
     androidStatusBarBackgroundProperty,
@@ -22,13 +22,20 @@ const STATUS_BAR_DARK_BCKG = 1711276032;
 declare module "@nativescript/core/ui/core/view" {
     interface View {
         _getFragmentManager(): androidx.fragment.app.FragmentManager;
+    }
+}
+declare module "@nativescript/core/ui/core/view-base" {
+    interface ViewBase {
         _dialogFragment: androidx.fragment.app.DialogFragment;
     }
 }
 
 
 async function getPageWindow(view: View): Promise<android.view.Window> {
-    const topView = view.page;
+    let topView: ViewBase = view.page;
+    while(topView.parent) {
+        topView = topView.parent
+    }
     if (topView && topView._dialogFragment) {
         const dialog = topView._dialogFragment.getDialog();
         if (dialog) {
@@ -41,13 +48,12 @@ async function getPageWindow(view: View): Promise<android.view.Window> {
             });
         }
     }
-    return (<androidx.appcompat.app.AppCompatActivity>this._context).getWindow();
+    return topView._context.getWindow();
 }
 
 class PageExtended {
     @cssProperty navigationBarColor: Color;
     @cssProperty statusBarColor: Color;
-    // @common.cssProperty statusBarStyle: string;
     async showStatusBar(animated?: boolean) {
         const window = await getPageWindow(this as any);
         window
@@ -109,7 +115,7 @@ class PageExtended {
 let mixinInstalled = false;
 export function overridePageBase() {
     const NSPage = require("@nativescript/core/ui/page").Page;
-    applyMixins(NSPage, [PageExtended]);
+    applyMixins(NSPage, [PageExtended], {override:true});
 }
 
 export function installMixins() {
