@@ -70,6 +70,22 @@ class PageExtended {
     [common.cssStatusBarColorProperty.setNative](color: Color) {
         this.setStatusBarColor(color);
     }
+    statusBarStyle
+    updateStatusBar:Function
+    public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
+        if (isBackNavigation) {
+            // if (this.navigationBarColor) {
+            //     this[cssNavigationBarColorProperty.setNative](this.navigationBarColor);
+            // }
+            if (this.statusBarColor) {
+                this.setStatusBarColor(this.statusBarColor);
+            }
+            if (this.statusBarStyle) {
+                this.updateStatusBar();
+            }
+        }
+        
+    }
 }
 
 let mixinInstalled = false;
