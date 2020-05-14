@@ -67,6 +67,9 @@ class PageExtended {
             .setSystemUiVisibility(android.view.View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
+    public onNavigatedTo(isBackNavigation: boolean) {
+    }
+
     async [cssStatusBarColorProperty.setNative](color: Color) {
         if (isPostLollipop()) {
             const window = await getPageWindow(this as any);
@@ -111,11 +114,31 @@ class PageExtended {
         }
     }
 }
+class PageExtended2 {
+    navigationBarColor: Color;
+    statusBarColor: Color;
+    statusBarStyle
+    public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
+        if (isBackNavigation) {
+            if (this.navigationBarColor) {
+                this[cssNavigationBarColorProperty.setNative](this.navigationBarColor);
+            }
+            if (this.statusBarColor) {
+                this[cssStatusBarColorProperty.setNative](this.statusBarColor);
+            }
+            if (this.statusBarStyle) {
+                this[statusBarStyleProperty.setNative](this.statusBarStyle);
+            }
+        }
+        
+    }
+}
 
 let mixinInstalled = false;
 export function overridePageBase() {
     const NSPage = require("@nativescript/core/ui/page").Page;
     applyMixins(NSPage, [PageExtended], {override:true});
+    applyMixins(NSPage, [PageExtended2], {after:true});
 }
 
 export function installMixins() {
