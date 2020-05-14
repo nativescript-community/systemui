@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/Akylas/nativescript-systemui/compare/v1.0.4...v1.0.5) (2020-05-14)
+
+
+### Bug Fixes
+
+* **android:** set colors on navigation back ([1a23afb](https://github.com/Akylas/nativescript-systemui/commit/1a23afb7a05c034bd0ec64008298f7043cdcfda1))
+
+
+
+
+
 ## [1.0.4](https://github.com/Akylas/nativescript-systemui/compare/v1.0.3...v1.0.4) (2020-02-24)
 
 
