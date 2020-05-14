@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/Akylas/nativescript-systemui/compare/v1.0.5...v1.0.6) (2020-05-14)
+
+
+### Bug Fixes
+
+* **ios:** update on navigationBack ([9d8c39d](https://github.com/Akylas/nativescript-systemui/commit/9d8c39d1232b69356ee1783c50378f95ebf6298f))
+
+
+
+
+
 ## [1.0.5](https://github.com/Akylas/nativescript-systemui/compare/v1.0.4...v1.0.5) (2020-05-14)
 
 
