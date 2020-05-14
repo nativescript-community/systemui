@@ -66,10 +66,6 @@ class PageExtended {
             .getDecorView()
             .setSystemUiVisibility(android.view.View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
-
-    public onNavigatedTo(isBackNavigation: boolean) {
-    }
-
     async [cssStatusBarColorProperty.setNative](color: Color) {
         if (isPostLollipop()) {
             const window = await getPageWindow(this as any);
