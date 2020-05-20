@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/Akylas/nativescript-systemui/compare/v1.0.6...v1.0.7) (2020-05-20)
+
+
+### Bug Fixes
+
+* **android:** statusBarStyle fix ([92c9fd6](https://github.com/Akylas/nativescript-systemui/commit/92c9fd6136b0402cfa2f4f8068bef170835f95f1))
+
+
+
+
+
 ## [1.0.6](https://github.com/Akylas/nativescript-systemui/compare/v1.0.5...v1.0.6) (2020-05-14)
 
 
