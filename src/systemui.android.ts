@@ -80,23 +80,20 @@ class PageExtended {
     }
 
     async [statusBarStyleProperty.setNative](
-        value: "dark" | "light" | { color: number; systemUiVisibility: number }
+        value: "dark" | "light" | number
     ) {
         if (isPostLollipop()) {
             const window = await getPageWindow(this as any);
             const decorView = window.getDecorView();
 
             if (value === "light") {
-                window.setStatusBarColor(STATUS_BAR_LIGHT_BCKG);
                 decorView.setSystemUiVisibility(
                     SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                 );
             } else if (value === "dark") {
-                window.setStatusBarColor(STATUS_BAR_DARK_BCKG);
                 decorView.setSystemUiVisibility(0);
             } else {
-                window.setStatusBarColor(value.color);
-                decorView.setSystemUiVisibility(value.systemUiVisibility);
+                decorView.setSystemUiVisibility(value);
             }
         }
     }
@@ -119,11 +116,11 @@ class PageExtended2 {
             if (this.navigationBarColor) {
                 this[cssNavigationBarColorProperty.setNative](this.navigationBarColor);
             }
-            if (this.statusBarColor) {
-                this[cssStatusBarColorProperty.setNative](this.statusBarColor);
-            }
             if (this.statusBarStyle) {
                 this[statusBarStyleProperty.setNative](this.statusBarStyle);
+            }
+            if (this.statusBarColor) {
+                this[cssStatusBarColorProperty.setNative](this.statusBarColor);
             }
         }
         
