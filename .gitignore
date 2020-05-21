@@ -6,8 +6,8 @@ dist/
 .vscode
 .idea
 .DS_Store
-*.js
 *.js.map
+/build
 *.esm.json 
 *.tns.json
 *.log
@@ -72,3 +72,5 @@ demo-angular/e2e/reports/**/*
 test-results.xml
 demo/e2e/reports/**/*
 /plugin/README.md
+plugin/**/*js.map
+plugin/**/*js

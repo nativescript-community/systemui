@@ -2,7 +2,8 @@
     "name": "nativescript-systemui",
     "version": "1.0.7",
     "description": "Provides API for SystemUI (StatusBar, NavigationBar...)",
-    "main": "systemui",
+    "main": "systemui.js",
+    "module": "systemui.mjs",
     "typings": "systemui.d.ts",
     "nativescript": {
         "platforms": {
