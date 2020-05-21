@@ -4,6 +4,7 @@
     "description": "Provides API for SystemUI (StatusBar, NavigationBar...)",
     "main": "systemui.js",
     "module": "systemui.mjs",
+    "sideEffects": false,
     "typings": "systemui.d.ts",
     "nativescript": {
         "platforms": {
