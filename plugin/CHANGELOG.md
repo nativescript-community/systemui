@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.8](https://github.com/Akylas/nativescript-systemui/compare/v1.0.7...v1.0.8) (2020-05-21)
+
+
+### Bug Fixes
+
+* full esm support ([df05bc8](https://github.com/Akylas/nativescript-systemui/commit/df05bc882e025cf51f6512411fc2ffae705eb0db))
+
+
+
+
+
 ## [1.0.7](https://github.com/Akylas/nativescript-systemui/compare/v1.0.6...v1.0.7) (2020-05-20)
 
 **Note:** Version bump only for package nativescript-systemui
