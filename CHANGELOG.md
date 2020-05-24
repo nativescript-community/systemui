@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.12](https://github.com/Akylas/nativescript-systemui/compare/v1.0.11...v1.0.12) (2020-05-24)
+
+
+### Bug Fixes
+
+* **ios:** ensure color is overriden after status bar style ([b318845](https://github.com/Akylas/nativescript-systemui/commit/b3188456fcc85e9d3bca940429cbec5e70c8ee11))
+
+
+
+
+
 ## [1.0.11](https://github.com/Akylas/nativescript-systemui/compare/v1.0.10...v1.0.11) (2020-05-21)
 
 **Note:** Version bump only for package nativescript-systemui

@@ -1,6 +1,6 @@
 {
     "name": "nativescript-systemui",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "Provides API for SystemUI (StatusBar, NavigationBar...)",
     "main": "systemui",
     "sideEffects": false,
