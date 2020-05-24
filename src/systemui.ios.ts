@@ -77,11 +77,11 @@ class PageExtended {
             // if (this.navigationBarColor) {
             //     this[cssNavigationBarColorProperty.setNative](this.navigationBarColor);
             // }
-            if (this.statusBarColor) {
-                this.setStatusBarColor(this.statusBarColor);
-            }
             if (this.statusBarStyle) {
                 this.updateStatusBar();
+            }
+            if (this.statusBarColor) {
+                this.setStatusBarColor(this.statusBarColor);
             }
         }
         
