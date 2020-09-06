@@ -36,7 +36,7 @@ class PageExtended {
         }
     }
     getStatusBarView(): UIView {
-        let topParent = common.findTopView(this as any);
+        const topParent = common.findTopView(this as any);
         const viewController = topParent.viewController as UIViewController;
         const topView = viewController.view.superview;
         if (topView) {
@@ -45,7 +45,7 @@ class PageExtended {
         return null;
     }
     setStatusBarColor(color: Color) {
-        let topParent = common.findTopView(this as any);
+        const topParent = common.findTopView(this as any);
         const viewController = topParent.viewController as UIViewController;
         if (viewController.modalPresentationStyle === UIModalPresentationStyle.FormSheet) {
             return null;
@@ -60,7 +60,7 @@ class PageExtended {
         if (topView) {
             let statusBarView = topView.viewWithTag(STATUSBAR_VIEW_TAG);
             if (!statusBarView) {
-                var statusBarFrame = UIApplication.sharedApplication.statusBarFrame;
+                const statusBarFrame = UIApplication.sharedApplication.statusBarFrame;
                 statusBarView = UIView.alloc().initWithFrame(statusBarFrame);
                 statusBarView.tag = STATUSBAR_VIEW_TAG;
                 statusBarView.autoresizingMask = 2 /* FlexibleWidth */ | 32 /* FlexibleBottomMargin */;
