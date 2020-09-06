@@ -2,7 +2,7 @@
     "description": "NativeScript StatusBar Demo for Vue",
     "license": "SEE LICENSE IN LICENSE.md",
     "readme": "README.md",
-    "repository": "http://www.github.com/Akylas/nativescript-systemui.git",
+    "repository": "http://www.github.com/nativescript-community/systemui.git",
     "nativescript": {
         "id": "org.nativescript.demovuestatusbar",
         "tns-android": {
@@ -14,7 +14,7 @@
     },
     "dependencies": {
         "@tweenjs/tween.js": "18.4.2",
-        "nativescript-systemui": "file:../plugin",
+        "@nativescript-community/systemui": "file:../plugin",
         "nativescript-tween": "0.0.3",
         "akylas-nativescript-vue": "^2.1.14",
         "nativescript-vue": "^2.4.0",

@@ -1,5 +1,5 @@
 {
-    "name": "nativescript-systemui",
+    "name": "@nativescript-community/systemui",
     "version": "1.0.14",
     "description": "Provides API for SystemUI (StatusBar, NavigationBar...)",
     "main": "systemui",
@@ -13,7 +13,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Akylas/nativescript-systemui.git"
+        "url": "git+https://github.com/nativescript-community/systemui.git"
     },
     "keywords": [
         "nativescript",
@@ -47,8 +47,8 @@
     ],
     "license": "MIT",
     "author": "Burke Holland <burkeholland@gmail.com>",
-    "homepage": "https://github.com/Akylas/nativescript-systemui#readme",
+    "homepage": "https://github.com/nativescript-community/systemui#readme",
     "bugs": {
-        "url": "https://github.com/Akylas/nativescript-systemui/issues"
+        "url": "https://github.com/nativescript-community/systemui/issues"
     }
 }

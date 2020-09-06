@@ -1,5 +1,5 @@
 import Vue from 'nativescript-vue';
-import { installMixins } from 'nativescript-systemui';
+import { installMixins } from '@nativescript-community/systemui';
 installMixins();
 import Home from './views/Home.vue';
 

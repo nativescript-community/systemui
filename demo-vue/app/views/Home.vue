@@ -18,7 +18,7 @@
 <script lang="ts">
 import Vue from "nativescript-vue";
 import { Component } from "vue-property-decorator";
-import { StatusBar } from "nativescript-systemui";
+import { StatusBar } from "@nativescript-community/systemui";
 import { Color } from "@nativescript/core/color";
 import TWEEN from "nativescript-tween";
 import { Page } from "@nativescript/core/ui/page";

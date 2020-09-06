@@ -1,5 +1,4 @@
-import { Color } from '@nativescript/core/color';
-import { View } from '@nativescript/core/ui/core/view';
+import { Color, View } from '@nativescript/core';
 import * as common from './systemui-common';
 
 const STATUSBAR_VIEW_TAG = 3245411;
@@ -9,7 +8,10 @@ class PageExtended {
     @common.cssProperty statusBarColor: Color;
 
     showStatusBar(animated = true) {
-        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(false, animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None);
+        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(
+            false,
+            animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None
+        );
         const statusBarView = this.getStatusBarView();
         if (statusBarView) {
             UIView.animateWithDurationAnimations(0.4, () => {
@@ -20,7 +22,10 @@ class PageExtended {
         }
     }
     hideStatusBar(animated = true) {
-        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(true, animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None);
+        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(
+            true,
+            animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None
+        );
         const statusBarView = this.getStatusBarView();
         if (statusBarView) {
             UIView.animateWithDurationAnimations(0.2, () => {
@@ -70,8 +75,8 @@ class PageExtended {
     [common.cssStatusBarColorProperty.setNative](color: Color) {
         this.setStatusBarColor(color);
     }
-    statusBarStyle
-    updateStatusBar:Function
+    statusBarStyle;
+    updateStatusBar: Function;
     public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
         if (isBackNavigation) {
             // if (this.navigationBarColor) {
@@ -84,7 +89,6 @@ class PageExtended {
                 this.setStatusBarColor(this.statusBarColor);
             }
         }
-        
     }
 }
 

@@ -21,7 +21,7 @@
         "paths": {
             "~/*": ["app/*"],
             "*": ["./node_modules/@nativescript/core/*", "./node_modules/*"],
-            "nativescript-systemui": ["../src/systemui"]
+            "@nativescript-community/systemui": ["../src/systemui"]
         }
     },
     "include": ["app/**/*", "references.d.ts"],

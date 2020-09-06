@@ -9,12 +9,12 @@ To show/hide the statusBar you need to have ```UIViewControllerBasedStatusBarApp
 ## Usage
 
 ````
-npm install nativescript-systemui --save
+npm install @nativescript-community/systemui --save
 ````
 
 If you are using version ^1.0.0 then we now use mixins
 ```ts
-import { installMixins } from 'nativescript-systemui';
+import { installMixins } from '@nativescript-community/systemui';
 installMixins();
 ```
 
@@ -33,7 +33,7 @@ iOS only supports a list of settings (default, light, dark, opaque), not a speci
 
 ```` XML
 <Page xmlns="http://schemas.nativescript.org/tns.xsd"
-      xmlns:x="nativescript-systemui"> 
+      xmlns:x="@nativescript-community/systemui"> 
       
       <!-- Use the tag with StatusBar to style it 
            Available ios settings:
@@ -49,7 +49,7 @@ iOS only supports a list of settings (default, light, dark, opaque), not a speci
 
 Those settings, combined with an ActionBar that has `background-color: #00C0F5` will give you...
 
-![status-bar-light](https://cdn.rawgit.com/Akylas/nativescript-systemui/master/images/status-bar-ios-android.png)
+![status-bar-light](https://cdn.rawgit.com/nativescript-community/systemui/master/images/status-bar-ios-android.png)
 
 **Note** The SystemUI plugin will not set the color of the StatusBar on iOS if you don't have an ActionBar as well. If you want to set the color of the StatusBar in NativeScript without having an ActionBar, you can set it to the page background color by setting `backgroundSpanUnderStatusBar="true"`. Otherwise you will have a white StatusBar no matter what you do. 
 
@@ -58,7 +58,7 @@ Those settings, combined with an ActionBar that has `background-color: #00C0F5` 
 In your root `app.js`:
 
 ```
-import StatusBarPlugin from 'nativescript-systemui/vue';
+import StatusBarPlugin from '@nativescript-community/systemui/vue';
 Vue.use(StatusBarPlugin);
 ```
 
