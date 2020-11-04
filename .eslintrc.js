@@ -95,7 +95,7 @@ module.exports = {
             1,
             {
                 // ignorePattern: '^import |^export {(.*?)}',
-                code: 130,
+                code: 200,
                 'ignoreRegExpLiterals': true,
                 'ignoreComments': true
             }
