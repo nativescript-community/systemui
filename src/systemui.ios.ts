@@ -1,8 +1,10 @@
-import { Color, View } from '@nativescript/core';
+import { Color, Frame, View } from '@nativescript/core';
+import { statusBarStyleProperty } from '@nativescript/core/ui/page';
 import * as common from './systemui-common';
 
 const STATUSBAR_VIEW_TAG = 3245411;
 
+let UIViewControllerBasedStatusBarAppearance: boolean;
 class PageExtended {
     @common.cssProperty navigationBarColor: Color;
     @common.cssProperty statusBarColor: Color;
@@ -75,7 +77,36 @@ class PageExtended {
     [common.cssStatusBarColorProperty.setNative](color: Color) {
         this.setStatusBarColor(color);
     }
+    public _updateStatusBarStyle(value?: string) {
+        const frame = this.frame;
+        if (UIViewControllerBasedStatusBarAppearance === undefined) {
+            UIViewControllerBasedStatusBarAppearance = NSBundle.mainBundle.infoDictionary.objectForKey('UIViewControllerBasedStatusBarAppearance');
+        }
+        if (value) {
+            if (this.frame) {
+                const navigationController: UINavigationController = frame.ios.controller;
+                const navigationBar = navigationController.navigationBar;
+                if (value === 'dark') {
+                    navigationBar.barStyle = UIBarStyle.Black;
+                } else {
+                    navigationBar.barStyle = UIBarStyle.Default;
+                }
+            }
+            if (!UIViewControllerBasedStatusBarAppearance) {
+                if (value === 'dark') {
+                    UIApplication.sharedApplication.setStatusBarStyleAnimated(UIStatusBarStyle.LightContent, false);
+                } else {
+                    UIApplication.sharedApplication.setStatusBarStyleAnimated(UIStatusBarStyle.DarkContent, false);
+                }
+            }
+        }
+    }
+    [statusBarStyleProperty.setNative](value) {
+        this._updateStatusBarStyle(value);
+
+    }
     statusBarStyle;
+    frame: Frame;
     updateStatusBar: Function;
     public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
         if (isBackNavigation) {
