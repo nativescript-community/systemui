@@ -1,7 +1,7 @@
 {
     "name": "@nativescript-community/systemui",
     "version": "1.1.4",
-    "description": "Provides API for SystemUI (StatusBar, NavigationBar...)",
+    "description": "Provides API for changing the styles of SystemUI (StatusBar, NavigationBar...) on iOS.",
     "main": "systemui",
     "sideEffects": false,
     "typings": "systemui.d.ts",
@@ -13,15 +13,16 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/nativescript-community/systemui.git"
+        "url": "https://github.com/nativescript-community/systemui"
     },
     "keywords": [
         "nativescript",
         "native",
         "typescript",
-        "ios",
+        "iOS",
         "statusbar",
-        "status bar"
+        "status bar",
+        "Vue"
     ],
     "contributors": [
         {
@@ -47,7 +48,6 @@
     ],
     "license": "MIT",
     "author": "Burke Holland <burkeholland@gmail.com>",
-    "homepage": "https://github.com/nativescript-community/systemui#readme",
     "bugs": {
         "url": "https://github.com/nativescript-community/systemui/issues"
     }
