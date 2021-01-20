@@ -60,7 +60,13 @@ class PageExtended {
     async [cssNavigationBarColorProperty.setNative](color: Color) {
         if (isPostLollipop()) {
             const window = await getPageWindow(this as any);
-            window.setNavigationBarColor(color ? color.android : 0);
+            if (color) {
+                window.addFlags(android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setNavigationBarColor(color.android);
+            } else {
+                window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setNavigationBarColor( 0);
+            }
         }
     }
 
