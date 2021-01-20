@@ -46,6 +46,17 @@ class PageExtended {
         }
         return null;
     }
+    hideStatusBarColor() {
+        const topParent = common.findTopView(this as any);
+        const viewController = topParent.viewController;
+        const topView = viewController && viewController.view.superview;
+        if (topView) {
+            const statusBarView = topView.viewWithTag(STATUSBAR_VIEW_TAG);
+            if (statusBarView) {
+                statusBarView.hidden = true;
+            }
+        }
+    }
     setStatusBarColor(color: Color) {
         const topParent = common.findTopView(this as any);
         const viewController = topParent.viewController as UIViewController;
@@ -70,6 +81,7 @@ class PageExtended {
                 topView.addSubview(statusBarView);
             }
             if (statusBarView) {
+                statusBarView.hidden = false;
                 statusBarView.backgroundColor = color ? color.ios : null;
             }
         }
@@ -119,6 +131,17 @@ class PageExtended {
             if (this.statusBarColor) {
                 this.setStatusBarColor(this.statusBarColor);
             }
+        }
+    }
+    updateWithWillAppear() {
+        if (this.statusBarColor) {
+            this.setStatusBarColor(this.statusBarColor);
+        }
+    }
+
+    updateWithWillDisappear() {
+        if (this.statusBarColor) {
+            this.hideStatusBarColor();
         }
     }
 }
