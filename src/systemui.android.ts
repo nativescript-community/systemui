@@ -6,8 +6,16 @@ import { applyMixins, cssNavigationBarColorProperty, cssProperty, cssStatusBarCo
 const isPostLollipop = lazy(() => android.os.Build.VERSION.SDK_INT >= 21);
 
 const SYSTEM_UI_FLAG_LIGHT_STATUS_BAR = 0x00002000;
-const STATUS_BAR_LIGHT_BCKG = -657931;
-const STATUS_BAR_DARK_BCKG = 1711276032;
+const SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR = 0x00002000;
+
+function contrastingColor(color: Color)
+{
+    return (luma(color) >= 165) ? '000' : 'fff';
+}
+function luma(color: Color) // color can be a hx string or an array of RGB values 0-255
+{
+    return (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b); // SMPTE C, Rec. 709 weightings
+}
 
 declare module '@nativescript/core/ui/core/view' {
     interface View {
