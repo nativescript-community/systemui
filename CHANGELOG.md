@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.7](https://github.com/nativescript-community/systemui/compare/v1.1.6...v1.1.7) (2021-01-20)
+
+
+### Bug Fixes
+
+* **android:** navigationBar color fix ([82b306c](https://github.com/nativescript-community/systemui/commit/82b306c287f8f8dc1b69bb9ed25a828d4bbc36be))
+* **ios:** animate status bar style change ([f9999ad](https://github.com/nativescript-community/systemui/commit/f9999ada09f08984140dcafc5d8949cf9bd59058))
+* **ios:** should fix modal issues once https://github.com/NativeScript/NativeScript/pull/9154 is merged ([f07df57](https://github.com/nativescript-community/systemui/commit/f07df570bc90590be31526d354b6f83b3e9aeb21))
+
+
+
+
+
 ## [1.1.6](https://github.com/nativescript-community/systemui/compare/v1.1.5...v1.1.6) (2020-11-23)
 
 **Note:** Version bump only for package @nativescript-community/systemui
