@@ -106,9 +106,9 @@ class PageExtended {
             }
             if (!UIViewControllerBasedStatusBarAppearance) {
                 if (value === 'dark') {
-                    UIApplication.sharedApplication.setStatusBarStyleAnimated(UIStatusBarStyle.LightContent, false);
+                    UIApplication.sharedApplication.setStatusBarStyleAnimated(UIStatusBarStyle.LightContent, true);
                 } else {
-                    UIApplication.sharedApplication.setStatusBarStyleAnimated(UIStatusBarStyle.DarkContent, false);
+                    UIApplication.sharedApplication.setStatusBarStyleAnimated(UIStatusBarStyle.DarkContent, true);
                 }
             }
         }
