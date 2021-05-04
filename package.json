@@ -9,7 +9,7 @@
         "clean.demo": "rimraf demo/hooks demo/node_modules demo/platforms",
         "clean": "rimraf plugin/ios plugin/android plugin/**/*.d.ts plugin/**/*.js plugin/**/*.js.map plugin/node_modules plugin/package-lock.json",
         "plugin.watch": "pnpm run tsc -- -w",
-        "publish": "pnpm run build && lerna publish --create-release=github",
+        "publish": "pnpm run build && lerna publish --create-release=github --force-publish",
         "commitmsg": "commitlint -e $GIT_PARAMS"
     },
     "devDependencies": {
