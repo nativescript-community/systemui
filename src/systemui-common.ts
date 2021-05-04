@@ -101,6 +101,11 @@ export const cssNavigationBarColorProperty = new CssProperty<Style, Color>({
     valueConverter: (v) => new Color(v),
 });
 cssNavigationBarColorProperty.register(Style);
+export const cssNavigationBarStyleProperty = new CssProperty({
+    name: 'navigationBarStyle',
+    cssName: 'navigation-bar-style'
+});
+cssNavigationBarStyleProperty.register(Style);
 export const cssStatusBarColorProperty = new CssProperty<Style, Color>({
     name: 'statusBarColor',
     cssName: 'status-bar-color',
