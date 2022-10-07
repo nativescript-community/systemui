@@ -8,6 +8,7 @@ let UIViewControllerBasedStatusBarAppearance: boolean;
 class PageExtended {
     @common.cssProperty navigationBarColor: Color;
     @common.cssProperty statusBarColor: Color;
+    @common.cssProperty windowBgColor: Color;
 
     showStatusBar(animated = true) {
         UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(
@@ -86,6 +87,18 @@ class PageExtended {
             }
         }
     }
+
+    setWindowBgColor(color: Color) {
+        const nativeApp = UIApplication.sharedApplication;
+        const firstWindow = nativeApp.keyWindow || (nativeApp.windows.count > 0 && nativeApp.windows[0]);
+        if (firstWindow && firstWindow.rootViewController) {
+            firstWindow.rootViewController.view.backgroundColor = color ? color.ios : null;
+            return;
+        }
+        if (firstWindow) {
+            firstWindow.backgroundColor = color ? color.ios : null;
+        }
+    }
     [common.cssStatusBarColorProperty.setNative](color: Color) {
         this.setStatusBarColor(color);
     }
@@ -117,6 +130,9 @@ class PageExtended {
         this._updateStatusBarStyle(value);
 
     }
+    [common.cssWindowBgColorProperty.setNative](value) {
+        this.setWindowBgColor(value);
+    }
     statusBarStyle;
     frame: Frame;
     updateStatusBar: Function;
@@ -130,6 +146,9 @@ class PageExtended {
             }
             if (this.statusBarColor) {
                 this.setStatusBarColor(this.statusBarColor);
+            }
+            if (this.windowBgColor) {
+                this.setWindowBgColor(this.windowBgColor);
             }
         }
     }

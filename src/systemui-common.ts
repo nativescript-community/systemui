@@ -113,6 +113,13 @@ export const cssStatusBarColorProperty = new CssProperty<Style, Color>({
     valueConverter: (v) => new Color(v),
 });
 cssStatusBarColorProperty.register(Style);
+export const cssWindowBgColorProperty = new CssProperty<Style, Color>({
+    name: 'windowBgColor',
+    cssName: 'window-bg-color',
+    equalityComparer: Color.equals,
+    valueConverter: (v) => new Color(v),
+});
+cssWindowBgColorProperty.register(Style);
 
 export function findTopView(view: View) {
     while (view.parent) {
