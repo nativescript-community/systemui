@@ -149,7 +149,6 @@ class PageExtended {
     }
     statusBarStyle;
     frame: Frame;
-    keepScreenAwake: boolean;
     updateStatusBar: Function;
     public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
         if (isBackNavigation) {
