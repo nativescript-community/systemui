@@ -9,6 +9,7 @@ class PageExtended {
     @common.cssProperty navigationBarColor: Color;
     @common.cssProperty statusBarColor: Color;
     @common.cssProperty windowBgColor: Color;
+    @common.cssProperty keepScreenAwake: boolean;
 
     showStatusBar(animated = true) {
         UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(

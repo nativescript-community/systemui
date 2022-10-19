@@ -56,6 +56,7 @@ async function getPageWindow(view: View): Promise<android.view.Window> {
 class PageExtended {
     @cssProperty navigationBarColor: Color;
     @cssProperty statusBarColor: Color;
+    @cssProperty keepScreenAwake: boolean;
     async showStatusBar(animated) {
         const window = await getPageWindow(this as any);
         const decorView = window.getDecorView();
