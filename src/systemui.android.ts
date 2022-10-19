@@ -1,7 +1,7 @@
 import { Color, View, ViewBase } from '@nativescript/core';
 import { androidStatusBarBackgroundProperty, statusBarStyleProperty } from '@nativescript/core/ui/page';
 import lazy from '@nativescript/core/utils/lazy';
-import { applyMixins, cssNavigationBarColorProperty, cssNavigationBarStyleProperty, cssProperty, cssStatusBarColorProperty } from './systemui-common';
+import { applyMixins, cssNavigationBarColorProperty, cssNavigationBarStyleProperty, cssProperty, cssStatusBarColorProperty, keepScreenAwakeProperty } from './systemui-common';
 
 const isPostLollipop = lazy(() => android.os.Build.VERSION.SDK_INT >= 21);
 
@@ -127,12 +127,22 @@ class PageExtended {
             }
         }
     }
+
+    async [keepScreenAwakeProperty.setNative](value) {
+        const window = await getPageWindow(this as any);
+        if (value) {
+            window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+    }
 }
 class PageExtended2 {
     navigationBarColor: Color;
     statusBarColor: Color;
     statusBarStyle;
     navigationBarStyle;
+    keepScreenAwake: boolean;
     public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
         if (isBackNavigation) {
             if (this.navigationBarColor) {
@@ -147,6 +157,15 @@ class PageExtended2 {
             if (this.statusBarColor) {
                 this[cssStatusBarColorProperty.setNative](this.statusBarColor);
             }
+            if (this.keepScreenAwake) {
+                this[keepScreenAwakeProperty.setNative](this.keepScreenAwake);
+            }
+        }
+    }
+    onNavigatingFrom(context, isBackNavigation, bindingContext) {
+        // this wont get called for modals but not a big deal as the window is closed
+        if (this.keepScreenAwake) {
+            this[keepScreenAwakeProperty.setNative](false);
         }
     }
 }

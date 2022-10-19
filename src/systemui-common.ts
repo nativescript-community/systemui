@@ -1,3 +1,4 @@
+import { booleanConverter } from '@nativescript/core';
 import { Color } from '@nativescript/core/color';
 import { CssProperty } from '@nativescript/core/ui/core/properties';
 import { View } from '@nativescript/core/ui/core/view';
@@ -120,6 +121,12 @@ export const cssWindowBgColorProperty = new CssProperty<Style, Color>({
     valueConverter: (v) => new Color(v),
 });
 cssWindowBgColorProperty.register(Style);
+export const keepScreenAwakeProperty = new CssProperty<Style, boolean>({
+    name: 'keepScreenAwake',
+    cssName: 'keep-screen-awake',
+    valueConverter: booleanConverter,
+});
+keepScreenAwakeProperty.register(Style);
 
 export function findTopView(view: View) {
     while (view.parent) {

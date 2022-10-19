@@ -133,8 +133,22 @@ class PageExtended {
     [common.cssWindowBgColorProperty.setNative](value) {
         this.setWindowBgColor(value);
     }
+    [common.keepScreenAwakeProperty.setNative](value) {
+        if (value) {
+            const app = UIApplication.sharedApplication;
+            if (!app.idleTimerDisabled) {
+                app.idleTimerDisabled = true;
+            }
+        } else {
+            const app = UIApplication.sharedApplication;
+            if (app.idleTimerDisabled) {
+                app.idleTimerDisabled = false;
+            }
+        }
+    }
     statusBarStyle;
     frame: Frame;
+    keepScreenAwake: boolean;
     updateStatusBar: Function;
     public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
         if (isBackNavigation) {
@@ -150,17 +164,23 @@ class PageExtended {
             if (this.windowBgColor) {
                 this.setWindowBgColor(this.windowBgColor);
             }
+            if (this.windowBgColor) {
+                this.setWindowBgColor(this.windowBgColor);
+            }
+            if (this.keepScreenAwake) {
+                this[common.keepScreenAwakeProperty.setNative](this.keepScreenAwake);
+            }
         }
     }
     updateWithWillAppear() {
-        if (this.statusBarColor) {
-            this.setStatusBarColor(this.statusBarColor);
+        if (this.keepScreenAwake) {
+            this[common.keepScreenAwakeProperty.setNative](this.keepScreenAwake);
         }
     }
 
     updateWithWillDisappear() {
-        if (this.statusBarColor) {
-            this.hideStatusBarColor();
+        if (this.keepScreenAwake) {
+            this[common.keepScreenAwakeProperty.setNative](false);
         }
     }
 }
