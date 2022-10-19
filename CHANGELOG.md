@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.11](https://github.com/nativescript-community/systemui/compare/v1.1.10...v1.1.11) (2022-10-19)
+
+
+### Features
+
+* `keepScreenAwake` property ([cf0c5ea](https://github.com/nativescript-community/systemui/commit/cf0c5eae4b5a86e6b21e0da1e312b7aa2f6b5752))
+
+
+
+
+
 ## [1.1.10](https://github.com/nativescript-community/systemui/compare/v1.1.9...v1.1.10) (2022-10-07)
 
 **Note:** Version bump only for package @nativescript-community/systemui
