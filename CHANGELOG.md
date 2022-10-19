@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.12](https://github.com/nativescript-community/systemui/compare/v1.1.11...v1.1.12) (2022-10-19)
+
+
+### Bug Fixes
+
+* `keepScreenAwake` fix ([d1c8bc2](https://github.com/nativescript-community/systemui/commit/d1c8bc243951a679632ca24f5f3ec86b4d5357c0))
+
+
+
+
+
 ## [1.1.11](https://github.com/nativescript-community/systemui/compare/v1.1.10...v1.1.11) (2022-10-19)
 
 
