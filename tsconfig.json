@@ -22,15 +22,10 @@
         "baseUrl": ".",
         "outDir": "./plugin",
         "paths": {
-            "tns-core-modules": ["./node_modules/@nativescript/core"],
-            "tns-core-modules/*": ["./node_modules/@nativescript/core/*"],
             "@nativescript-community/systemui": ["src/systemui"],
-            "@nativescript-community/systemui/*": ["src/*"],
-            "*": ["node_modules/*"]
+            "@nativescript-community/systemui/*": ["src/*"]
         },
-        "plugins": [
-          { "transform": "./node_modules/@nativescript/webpack/transformers/ns-transform-native-classes", "type": "raw" }
-        ]
+        "plugins": [{ "transform": "@nativescript/webpack/dist/transformers/NativeClass", "type": "raw" }]
     },
     "include": ["src/**/*", "./references.d.ts"],
     "exclude": ["node_modules", "platforms"],

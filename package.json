@@ -2,6 +2,8 @@
     "name": "@nativescript-community/systemui",
     "version": "5.0.0",
     "scripts": {
+        "setup": "ts-patch install",
+        "prepare": "npm run setup",
         "tsc": "cp src/systemui.d.ts plugin && tsc -skipLibCheck -d",
         "build": " cp README.md plugin/ && rm -f .tsbuildinfo && npm run tsc",
         "demo.ios": "pnpm i && pnpm run tsc && cd demo && tns run ios",
@@ -15,20 +17,19 @@
     "devDependencies": {
         "@commitlint/cli": "^17.1.2",
         "@commitlint/config-conventional": "^17.1.0",
-        "@nativescript/core": "7.0.0",
-        "@nativescript/types-android": "7.0.2",
-        "@nativescript/types-ios": "7.0.1",
-        "@nativescript/webpack": "~3.0.1",
-        "@nativescript-community/ui-collectionview": "^3.0.5",
-        "@types/node": "^14.6.4",
-        "@typescript-eslint/eslint-plugin": "4.0.1",
-        "@typescript-eslint/parser": "4.0.1",
-        "eslint": "7.8.1",
+        "@nativescript/core": "8.3.5",
+        "@nativescript/types-android": "8.3.1",
+        "@nativescript/types-ios": "8.3.1",
+        "@nativescript/webpack": "~5.0.9",
+        "@types/node": "^18.11.5",
+        "@typescript-eslint/eslint-plugin": "5.41.0",
+        "@typescript-eslint/parser": "5.41.0",
+        "eslint": "8.26.0",
         "husky": "^8.0.1",
-        "lerna": "^5.6.1",
+        "lerna": "^6.0.1",
         "rimraf": "^3.0.2",
         "ts-patch": "2.0.2",
-        "typescript": "~4.6.4"
+        "typescript": "4.7.4"
     },
     "repository": {
         "type": "git",
@@ -40,7 +41,9 @@
         "typescript",
         "ios",
         "statusbar",
-        "status bar"
+        "status bar",
+        "brightness",
+        "screen lock"
     ],
     "contributors": [
         {
