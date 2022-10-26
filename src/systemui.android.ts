@@ -135,7 +135,9 @@ class PageExtended {
     }
     async [screenBrightnessProperty.setNative](value) {
         const window = await getPageWindow(this as any);
-        window.getAttributes().screenBrightness = value;
+        const params = window.getAttributes();
+        params.screenBrightness = value;
+        window.setAttributes(params);
     }
 }
 class PageExtended2 {

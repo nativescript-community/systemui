@@ -126,12 +126,13 @@ export const keepScreenAwakeProperty = new CssProperty<Style, boolean>({
     cssName: 'keep-screen-awake',
     valueConverter: booleanConverter,
 });
+keepScreenAwakeProperty.register(Style);
 export const screenBrightnessProperty = new CssProperty<Style, number>({
     name: 'screenBrightness',
     cssName: 'screen-brightness',
     valueConverter: parseFloat,
 });
-keepScreenAwakeProperty.register(Style);
+screenBrightnessProperty.register(Style);
 
 export function findTopView(view: View) {
     while (view.parent) {

@@ -15,6 +15,10 @@ class PageExtended {
     savedBrightness;
     didBecomeActiveListener;
 
+    statusBarStyle;
+
+    frame: Frame; // defined in View
+
     showStatusBar(animated = true) {
         UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(
             false,
@@ -151,9 +155,15 @@ class PageExtended {
             }
         }
     }
+    [common.screenBrightnessProperty.setNative](value) {
+        if (value ===  0) {
+            this.resetCustomBrightness();
+        } else{
+            this.applyCustomBrightness();
+        }
+    }
     didBecomeActive() {
-        console.log('didBecomeActive', this.screenBrightness);
-        if (this.screenBrightness) {
+        if (this.screenBrightness > 0) {
             this.applyCustomBrightness();
         }
     }
@@ -165,7 +175,6 @@ class PageExtended {
         if (!this.savedBrightness) {
             this.savedBrightness = UIScreen.mainScreen.brightness;
         }
-        console.log('applyCustomBrightness', this.savedBrightness, this.screenBrightness);
         UIScreen.mainScreen.brightness = this.screenBrightness;
     }
     resetCustomBrightness() {
@@ -174,11 +183,6 @@ class PageExtended {
             this.savedBrightness = null;
         }
     }
-    [common.screenBrightnessProperty.setNative](value) {
-        this.applyCustomBrightness();
-    }
-    statusBarStyle;
-    frame: Frame;
     updateStatusBar: Function;
     public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
         if (isBackNavigation) {
@@ -200,27 +204,23 @@ class PageExtended {
             if (this.keepScreenAwake) {
                 this[common.keepScreenAwakeProperty.setNative](this.keepScreenAwake);
             }
-            if (this.screenBrightness) {
+            if (this.screenBrightness > 0) {
                 this.applyCustomBrightness();
             }
         }
     }
     updateWithWillAppear() {
-        console.log('updateWithWillAppear', this);
-
-        if (this.screenBrightness) {
+        if (this.screenBrightness > 0) {
             this.applyCustomBrightness();
         }
     }
 
     updateWithWillDisappear() {
-        console.log('updateWithWillDisappear', this);
         if (this.savedBrightness) {
             this.resetCustomBrightness();
         }
     }
     disposeNativeView() {
-        console.log('disposeNativeView', !!this.didBecomeActiveListener);
         if (this.didBecomeActiveListener) {
             removeApplicationDidBecomeActiveListener(this.didBecomeActiveListener);
             this.didBecomeActiveListener = null;
