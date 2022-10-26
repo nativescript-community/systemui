@@ -1,7 +1,7 @@
 import { Color, View, ViewBase } from '@nativescript/core';
-import { androidStatusBarBackgroundProperty, statusBarStyleProperty } from '@nativescript/core/ui/page';
+import { statusBarStyleProperty } from '@nativescript/core/ui/page';
 import lazy from '@nativescript/core/utils/lazy';
-import { applyMixins, cssNavigationBarColorProperty, cssNavigationBarStyleProperty, cssProperty, cssStatusBarColorProperty, keepScreenAwakeProperty } from './systemui-common';
+import { applyMixins, cssNavigationBarColorProperty, cssNavigationBarStyleProperty, cssProperty, cssStatusBarColorProperty, keepScreenAwakeProperty, screenBrightnessProperty } from './systemui-common';
 
 const isPostLollipop = lazy(() => android.os.Build.VERSION.SDK_INT >= 21);
 
@@ -11,22 +11,17 @@ const FLAG_TRANSLUCENT_NAVIGATION = 0x08000000;
 const FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS = 0x80000000;
 const SYSTEM_UI_FLAG_LAYOUT_STABLE = 0x00000100;
 const SYSTEM_UI_FLAG_VISIBLE = 0x00000000;
-const SYSTEM_UI_FLAG_FULLSCREEN = 0x00000004;
+// const SYSTEM_UI_FLAG_FULLSCREEN = 0x00000004;
 
-function contrastingColor(color: Color)
-{
-    return (luma(color) >= 165) ? '000' : 'fff';
-}
-function luma(color: Color) // color can be a hx string or an array of RGB values 0-255
-{
-    return (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b); // SMPTE C, Rec. 709 weightings
-}
+// function contrastingColor(color: Color)
+// {
+//     return (luma(color) >= 165) ? '000' : 'fff';
+// }
+// function luma(color: Color) // color can be a hx string or an array of RGB values 0-255
+// {
+//     return (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b); // SMPTE C, Rec. 709 weightings
+// }
 
-declare module '@nativescript/core/ui/core/view' {
-    interface View {
-        _getFragmentManager(): androidx.fragment.app.FragmentManager;
-    }
-}
 declare module '@nativescript/core/ui/core/view-base' {
     interface ViewBase {
         _dialogFragment: androidx.fragment.app.DialogFragment;
@@ -57,6 +52,7 @@ class PageExtended {
     @cssProperty navigationBarColor: Color;
     @cssProperty statusBarColor: Color;
     @cssProperty keepScreenAwake: boolean;
+    @cssProperty screenBrightness: number;
     async showStatusBar(animated) {
         const window = await getPageWindow(this as any);
         const decorView = window.getDecorView();
@@ -137,6 +133,10 @@ class PageExtended {
             window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
     }
+    async [screenBrightnessProperty.setNative](value) {
+        const window = await getPageWindow(this as any);
+        window.getAttributes().screenBrightness = value;
+    }
 }
 class PageExtended2 {
     navigationBarColor: Color;
@@ -144,6 +144,7 @@ class PageExtended2 {
     statusBarStyle;
     navigationBarStyle;
     keepScreenAwake: boolean;
+    screenBrightness: number;
     public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
         if (isBackNavigation) {
             if (this.navigationBarColor) {
@@ -161,12 +162,15 @@ class PageExtended2 {
             if (this.keepScreenAwake) {
                 this[keepScreenAwakeProperty.setNative](this.keepScreenAwake);
             }
+            if (this.screenBrightness) {
+                this[screenBrightnessProperty.setNative](this.screenBrightness);
+            }
         }
     }
     onNavigatingFrom(context, isBackNavigation, bindingContext) {
         // this wont get called for modals but not a big deal as the window is closed
         if (this.keepScreenAwake) {
-            this[keepScreenAwakeProperty.setNative](false);
+            this[keepScreenAwakeProperty.setNative](0);
         }
     }
 }

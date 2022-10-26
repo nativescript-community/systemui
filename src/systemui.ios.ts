@@ -1,4 +1,4 @@
-import { Color, Frame, View } from '@nativescript/core';
+import { Application, Color, Frame, View } from '@nativescript/core';
 import { statusBarStyleProperty } from '@nativescript/core/ui/page';
 import * as common from './systemui-common';
 
@@ -10,6 +10,10 @@ class PageExtended {
     @common.cssProperty statusBarColor: Color;
     @common.cssProperty windowBgColor: Color;
     @common.cssProperty keepScreenAwake: boolean;
+    @common.cssProperty screenBrightness: number;
+
+    savedBrightness;
+    didBecomeActiveListener;
 
     showStatusBar(animated = true) {
         UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(
@@ -147,6 +151,32 @@ class PageExtended {
             }
         }
     }
+    didBecomeActive() {
+        console.log('didBecomeActive', this.screenBrightness);
+        if (this.screenBrightness) {
+            this.applyCustomBrightness();
+        }
+    }
+    applyCustomBrightness() {
+        if (!this.didBecomeActiveListener) {
+            this.didBecomeActiveListener = this.didBecomeActive.bind(this);
+            addApplicationDidBecomeActiveListener(this.didBecomeActiveListener);
+        }
+        if (!this.savedBrightness) {
+            this.savedBrightness = UIScreen.mainScreen.brightness;
+        }
+        console.log('applyCustomBrightness', this.savedBrightness, this.screenBrightness);
+        UIScreen.mainScreen.brightness = this.screenBrightness;
+    }
+    resetCustomBrightness() {
+        if (this.savedBrightness) {
+            UIScreen.mainScreen.brightness = this.savedBrightness;
+            this.savedBrightness = null;
+        }
+    }
+    [common.screenBrightnessProperty.setNative](value) {
+        this.applyCustomBrightness();
+    }
     statusBarStyle;
     frame: Frame;
     updateStatusBar: Function;
@@ -170,17 +200,30 @@ class PageExtended {
             if (this.keepScreenAwake) {
                 this[common.keepScreenAwakeProperty.setNative](this.keepScreenAwake);
             }
+            if (this.screenBrightness) {
+                this.applyCustomBrightness();
+            }
         }
     }
     updateWithWillAppear() {
-        if (this.keepScreenAwake) {
-            this[common.keepScreenAwakeProperty.setNative](this.keepScreenAwake);
+        console.log('updateWithWillAppear', this);
+
+        if (this.screenBrightness) {
+            this.applyCustomBrightness();
         }
     }
 
     updateWithWillDisappear() {
-        if (this.keepScreenAwake) {
-            this[common.keepScreenAwakeProperty.setNative](false);
+        console.log('updateWithWillDisappear', this);
+        if (this.savedBrightness) {
+            this.resetCustomBrightness();
+        }
+    }
+    disposeNativeView() {
+        console.log('disposeNativeView', !!this.didBecomeActiveListener);
+        if (this.didBecomeActiveListener) {
+            removeApplicationDidBecomeActiveListener(this.didBecomeActiveListener);
+            this.didBecomeActiveListener = null;
         }
     }
 }
@@ -191,9 +234,48 @@ export function overridePageBase() {
     common.applyMixins(NSPage, [PageExtended]);
 }
 
+function getAppDelegate() {
+    // Play nice with other plugins by not completely ignoring anything already added to the appdelegate
+    if (Application.ios.delegate === undefined) {
+        @NativeClass
+        class UIApplicationDelegateImpl extends UIResponder implements UIApplicationDelegate {
+            public static ObjCProtocols = [UIApplicationDelegate];
+        }
+
+        Application.ios.delegate = UIApplicationDelegateImpl;
+    }
+    return Application.ios.delegate;
+}
+const applicationDidBecomeActiveListeners = [];
+function addApplicationDidBecomeActiveListener(l) {
+    applicationDidBecomeActiveListeners.push(l);
+}
+function removeApplicationDidBecomeActiveListener(l) {
+    const index = applicationDidBecomeActiveListeners.indexOf(l);
+    if (index  !== -1) {
+        applicationDidBecomeActiveListeners.splice(index, 1);
+    }
+}
+function addAppDelegateMethods(appDelegate) {
+    // we need the launchOptions for this one so it's a bit hard to use the UIApplicationDidFinishLaunchingNotification pattern we're using for other things
+    // however, let's not override 'applicationDidFinishLaunchingWithOptions' if we don't really need it:
+    const oldMethod = appDelegate.prototype.applicationDidBecomeActive;
+    appDelegate.prototype.applicationDidBecomeActive = function (application) {
+        if (oldMethod) {
+            oldMethod.call(this, application);
+        }
+        applicationDidBecomeActiveListeners.forEach(l=>l());
+
+
+        return true;
+    };
+}
 export function installMixins() {
     if (!mixinInstalled) {
         mixinInstalled = true;
         overridePageBase();
+
+        const delegate = getAppDelegate();
+        addAppDelegateMethods(delegate);
     }
 }
