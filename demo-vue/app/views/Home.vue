@@ -1,6 +1,6 @@
 <template>
     <Frame>
-        <Page id="page" ref="page" class="page":statusBarColor="statusBarColor" :navigationBarColor="navigationBarColor">
+        <Page id="page" ref="page" class="page" :statusBarColor="statusBarColor" :navigationBarColor="navigationBarColor" screenBrightness="0.2">
             <!-- <StatusBar ref="statusBar" :barColor="statusBarColor" /> -->
             <!-- <NavigationBar ref="navigationBar" :barColor="navigationBarColor" /> -->
             <ActionBar title="StatusBar Demo" />
@@ -18,7 +18,6 @@
 <script lang="ts">
 import Vue from "nativescript-vue";
 import { Component } from "vue-property-decorator";
-import { StatusBar } from "@nativescript-community/systemui";
 import { Color } from "@nativescript/core/color";
 import TWEEN from "nativescript-tween";
 import { Page } from "@nativescript/core/ui/page";
@@ -51,14 +50,15 @@ export default class Home extends Vue {
         this.$showModal(Home, { fullscreen: true });
     }
     animateStatusBarColor() {
+        const color = this.statusBarColor;
         const destColor = new Color(
-            this.statusBarColor.toString() === "#FF0000" ? "green" : "red"
+            color.toString() === "#FF0000" ? "green" : "red"
         );
         new TWEEN.Tween({
-            a: this.statusBarColor.a,
-            r: this.statusBarColor.r,
-            g: this.statusBarColor.g,
-            b: this.statusBarColor.b
+            a: color.a,
+            r: color.r,
+            g: color.g,
+            b: color.b
         })
             .to(
                 {
@@ -72,7 +72,6 @@ export default class Home extends Vue {
             .easing(TWEEN.Easing.Quadratic.Out)
             .onUpdate(obj => {
                 this.statusBarColor = new Color(obj.a, obj.r, obj.g, obj.b);
-                // this.log('onUpdate', this.viewHeight, obj.value);
             })
             .start();
     }
