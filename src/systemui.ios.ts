@@ -156,7 +156,7 @@ class PageExtended {
         }
     }
     [common.screenBrightnessProperty.setNative](value) {
-        if (value ===  0) {
+        if (value <  0) {
             this.resetCustomBrightness();
         } else{
             this.applyCustomBrightness();
