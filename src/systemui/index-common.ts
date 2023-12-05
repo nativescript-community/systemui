@@ -1,8 +1,4 @@
-import { booleanConverter } from '@nativescript/core';
-import { Color } from '@nativescript/core/color';
-import { CssProperty } from '@nativescript/core/ui/core/properties';
-import { View } from '@nativescript/core/ui/core/view';
-import { Style } from '@nativescript/core/ui/styling/style';
+import { Color, CssProperty, Style, View, booleanConverter } from '@nativescript/core';
 
 export function applyMixins(
     derivedCtor: any,

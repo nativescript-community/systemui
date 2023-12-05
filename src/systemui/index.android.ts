@@ -1,9 +1,9 @@
 import { Color, Frame, View, ViewBase } from '@nativescript/core';
+import { SDK_VERSION } from '@nativescript/core/utils';
 import { statusBarStyleProperty } from '@nativescript/core/ui/page';
-import lazy from '@nativescript/core/utils/lazy';
 import { applyMixins, cssNavigationBarColorProperty, cssNavigationBarStyleProperty, cssProperty, cssStatusBarColorProperty, keepScreenAwakeProperty, screenBrightnessProperty } from './index-common';
 
-const isPostLollipop = lazy(() => android.os.Build.VERSION.SDK_INT >= 21);
+const isPostLollipop = SDK_VERSION >= 21;
 
 const SYSTEM_UI_FLAG_LIGHT_STATUS_BAR = 0x00002000;
 const SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR = 0x00000010;
@@ -66,13 +66,13 @@ class PageExtended {
         window.getDecorView().setSystemUiVisibility((uiOptions | 0x00000004) & ~SYSTEM_UI_FLAG_VISIBLE);
     }
     async [cssStatusBarColorProperty.setNative](color: Color) {
-        if (isPostLollipop()) {
+        if (isPostLollipop) {
             const window = await getPageWindow(this as any);
             window.setStatusBarColor(color ? color.android : 0);
         }
     }
     async [cssNavigationBarColorProperty.setNative](color) {
-        if (isPostLollipop()) {
+        if (isPostLollipop) {
             const window = await getPageWindow(this as any);
             if (color) {
                 window.addFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -84,7 +84,7 @@ class PageExtended {
         }
     }
     async [cssNavigationBarStyleProperty.setNative](value) {
-        if (isPostLollipop()) {
+        if (isPostLollipop) {
             const window = await getPageWindow(this as any);
             const decorView = window.getDecorView();
             let uiOptions = decorView.getSystemUiVisibility();
@@ -102,7 +102,7 @@ class PageExtended {
         }
     }
     async [statusBarStyleProperty.setNative](value) {
-        if (isPostLollipop()) {
+        if (isPostLollipop) {
             const window = await getPageWindow(this as any);
             const decorView = window.getDecorView();
             const uiOptions = decorView.getSystemUiVisibility();
