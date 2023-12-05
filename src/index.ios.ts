@@ -1,8 +1,32 @@
 import { Application, Color, Frame, View } from '@nativescript/core';
 import { statusBarStyleProperty } from '@nativescript/core/ui/page';
-import * as common from './systemui-common';
+import * as common from './index-common';
 
 const STATUSBAR_VIEW_TAG = 3245411;
+
+function updatePagewSystemUI(page: PageExtended) {
+    // if (this.navigationBarColor) {
+    //     this[cssNavigationBarColorProperty.setNative](this.navigationBarColor);
+    // }
+    if (page.statusBarStyle) {
+        page.updateStatusBar();
+    }
+    if (page.statusBarColor) {
+        page.setStatusBarColor(page.statusBarColor);
+    }
+    if (page.windowBgColor) {
+        page.setWindowBgColor(page.windowBgColor);
+    }
+    if (this.windowBgColor) {
+        page.setWindowBgColor(page.windowBgColor);
+    }
+    if (page.keepScreenAwake) {
+        page[common.keepScreenAwakeProperty.setNative](page.keepScreenAwake);
+    }
+    if (page.screenBrightness > 0) {
+        page.applyCustomBrightness();
+    }
+}
 
 let UIViewControllerBasedStatusBarAppearance: boolean;
 class PageExtended {
@@ -20,10 +44,7 @@ class PageExtended {
     frame: Frame; // defined in View
 
     showStatusBar(animated = true) {
-        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(
-            false,
-            animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None
-        );
+        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(false, animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None);
         const statusBarView = this.getStatusBarView();
         if (statusBarView) {
             UIView.animateWithDurationAnimations(0.4, () => {
@@ -34,10 +55,7 @@ class PageExtended {
         }
     }
     hideStatusBar(animated = true) {
-        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(
-            true,
-            animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None
-        );
+        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(true, animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None);
         const statusBarView = this.getStatusBarView();
         if (statusBarView) {
             UIView.animateWithDurationAnimations(0.2, () => {
@@ -137,7 +155,6 @@ class PageExtended {
     }
     [statusBarStyleProperty.setNative](value) {
         this._updateStatusBarStyle(value);
-
     }
     [common.cssWindowBgColorProperty.setNative](value) {
         this.setWindowBgColor(value);
@@ -156,9 +173,9 @@ class PageExtended {
         }
     }
     [common.screenBrightnessProperty.setNative](value) {
-        if (value <  0) {
+        if (value < 0) {
             this.resetCustomBrightness();
-        } else{
+        } else {
             this.applyCustomBrightness();
         }
     }
@@ -184,29 +201,34 @@ class PageExtended {
         }
     }
     updateStatusBar: Function;
+
+    _raiseShowingModallyEvent() {
+        updatePagewSystemUI(this);
+    }
+    _raiseShowingBottomSheetEvent() {
+        updatePagewSystemUI(this);
+    }
+    _raiseClosingModallyEvent() {
+        // if (this.keepScreenAwake) {
+        //     this[keepScreenAwakeProperty.setNative](0);
+        // }
+        const currentPage = Frame.topmost().currentPage;
+        if (currentPage) {
+            updatePagewSystemUI(currentPage as any as PageExtended);
+        }
+    }
+    _raiseClosedBottomSheetEvent() {
+        // if (this.keepScreenAwake) {
+        //     this[keepScreenAwakeProperty.setNative](0);
+        // }
+        const currentPage = Frame.topmost().currentPage;
+        if (currentPage) {
+            updatePagewSystemUI(currentPage as any as PageExtended);
+        }
+    }
     public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
         if (isBackNavigation) {
-            // if (this.navigationBarColor) {
-            //     this[cssNavigationBarColorProperty.setNative](this.navigationBarColor);
-            // }
-            if (this.statusBarStyle) {
-                this.updateStatusBar();
-            }
-            if (this.statusBarColor) {
-                this.setStatusBarColor(this.statusBarColor);
-            }
-            if (this.windowBgColor) {
-                this.setWindowBgColor(this.windowBgColor);
-            }
-            if (this.windowBgColor) {
-                this.setWindowBgColor(this.windowBgColor);
-            }
-            if (this.keepScreenAwake) {
-                this[common.keepScreenAwakeProperty.setNative](this.keepScreenAwake);
-            }
-            if (this.screenBrightness > 0) {
-                this.applyCustomBrightness();
-            }
+            updatePagewSystemUI(this);
         }
     }
     updateWithWillAppear() {
@@ -252,7 +274,7 @@ function addApplicationDidBecomeActiveListener(l) {
 }
 function removeApplicationDidBecomeActiveListener(l) {
     const index = applicationDidBecomeActiveListeners.indexOf(l);
-    if (index  !== -1) {
+    if (index !== -1) {
         applicationDidBecomeActiveListeners.splice(index, 1);
     }
 }
@@ -264,8 +286,7 @@ function addAppDelegateMethods(appDelegate) {
         if (oldMethod) {
             oldMethod.call(this, application);
         }
-        applicationDidBecomeActiveListeners.forEach(l=>l());
-
+        applicationDidBecomeActiveListeners.forEach((l) => l());
 
         return true;
     };

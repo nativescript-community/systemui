@@ -1,35 +1,32 @@
 {
-    "name": "@nativescript-community/systemui",
-    "version": "5.0.0",
     "scripts": {
-        "setup": "ts-patch install",
-        "prepare": "npm run setup",
-        "tsc": "cp src/systemui.d.ts plugin && tsc -skipLibCheck -d",
-        "build": " cp README.md plugin/ && rm -f .tsbuildinfo && npm run tsc",
-        "demo.ios": "pnpm i && pnpm run tsc && cd demo && tns run ios",
-        "demo.android": "pnpm i && pnpm run tsc && cd demo && tns run android",
-        "clean.demo": "rimraf demo/hooks demo/node_modules demo/platforms",
-        "clean": "rimraf plugin/ios plugin/android plugin/**/*.d.ts plugin/**/*.js plugin/**/*.js.map plugin/node_modules plugin/package-lock.json",
-        "plugin.watch": "pnpm run tsc -- -w",
-        "publish": "pnpm run build && lerna publish --create-release=github --force-publish",
-        "commitmsg": "commitlint -e $GIT_PARAMS"
+        "build": "lerna run build",
+        "build.watch": "lerna run build.watch",
+        "build.all": "npm run build",
+        "build.all.win": "lerna run build.all.win",
+        "clean": "rimraf 'packages/**/*.d.ts' 'packages/**/*.js' 'packages/**/*.js.map' 'packages/**/*.metada' 'packages/**/angular/ng-package.json'",
+        "fullclean": "npm run clean && rimraf 'packages/**/node_modules' 'demo-*/hooks' 'demo-*/node_modules' 'package-lock.json' 'pnpm-lock.yaml' 'node_modules'",
+        "commitmsg": "commitlint -e $GIT_PARAMS",
+        "demo.vue.android": "cd ./demo-vue && ns run android --no-hmr --env.watchNodeModules",
+        "demo.vue.clean": "cd ./demo-vue && ns clean",
+        "demo.vue.ios": "cd ./demo-vue && ns run ios --no-hmr --env.watchNodeModules",
+        "demo.vue3.android": "cd ./demo-vue3 && ns run android --no-hmr --env.watchNodeModules",
+        "demo.vue3.clean": "cd ./demo-vue3 && ns clean",
+        "demo.vue3.ios": "cd ./demo-vue3 && ns run ios --no-hmr --env.watchNodeModules",
+        "postinstall": "npm run setup",
+        "publish": "npm run setup && npm run clean && npm run build.all && npm run readme && npm run doc && npm run commit_readme_doc_changes && lerna publish",
+        "readme": "lerna run readme && node ./tools/readme.js",
+        "setup": "npm run submodules && ts-patch install",
+        "start": "./node_modules/.bin/ntl -A -s 15 -o",
+        "submodules": "git submodule update --init",
+        "submodules.update": "git submodule -q foreach git pull -q origin master && git add .",
+        "sync": "node ./tools/sync.js",
+        "update": "node ./tools/update.js",
+        "doc": "node tools/builddoc.mjs",
+        "commit_readme_doc_changes": "git add docs/** *.md ; git commit -m \"readme/doc\" ; echo \"commit readme doc done\""
     },
-    "devDependencies": {
-        "@commitlint/cli": "^17.1.2",
-        "@commitlint/config-conventional": "^17.1.0",
-        "@nativescript/core": "8.3.5",
-        "@nativescript/types-android": "8.3.1",
-        "@nativescript/types-ios": "8.3.1",
-        "@nativescript/webpack": "~5.0.9",
-        "@types/node": "^18.11.5",
-        "@typescript-eslint/eslint-plugin": "5.41.0",
-        "@typescript-eslint/parser": "5.41.0",
-        "eslint": "8.26.0",
-        "husky": "^8.0.1",
-        "lerna": "^6.0.1",
-        "rimraf": "^3.0.2",
-        "ts-patch": "2.0.2",
-        "typescript": "4.7.4"
+    "dependencies": {
+        "@nativescript-community/plugin-seed-tools": "file:tools"
     },
     "repository": {
         "type": "git",
@@ -66,5 +63,30 @@
         "extends": [
             "@commitlint/config-conventional"
         ]
+    },
+    "ntl": {
+        "descriptions": {
+            "build": "Build the plugin",
+            "build.all": "Build the plugin for all platforms",
+            "clean": "Clean the local environment.",
+            "demo.vue.android": "Runs the Vue demo on Android.",
+            "demo.vue.ios": "Runs the Vue demo on iOS.",
+            "watch": "Watch for changes in the plugin source and re-build."
+        }
+    },
+    "workspaces": [
+        "packages/*",
+        "demo-vue",
+        "demo-vue3",
+        "demo-ng",
+        "demo-svelte",
+        "demo-react",
+        "demo-snippets"
+    ],
+    "engines": {
+        "npm": "please use yarn or pnpm",
+        "yarn": ">=1.19.1",
+        "pnpm": ">=7.0.0",
+        "node": "^14.20.0 || ^16.13.0 || >=18.10.0"
     }
 }

@@ -92,14 +92,14 @@ export const cssProperty = (target: Object, key: string | symbol) => {
         get: createGetter(key),
         set: createSetter(key),
         enumerable: true,
-        configurable: true,
+        configurable: true
     });
 };
 export const cssNavigationBarColorProperty = new CssProperty<Style, Color>({
     name: 'navigationBarColor',
     cssName: 'navigation-bar-color',
     equalityComparer: Color.equals,
-    valueConverter: (v) => new Color(v),
+    valueConverter: (v) => new Color(v)
 });
 cssNavigationBarColorProperty.register(Style);
 export const cssNavigationBarStyleProperty = new CssProperty({
@@ -111,26 +111,26 @@ export const cssStatusBarColorProperty = new CssProperty<Style, Color>({
     name: 'statusBarColor',
     cssName: 'status-bar-color',
     equalityComparer: Color.equals,
-    valueConverter: (v) => new Color(v),
+    valueConverter: (v) => new Color(v)
 });
 cssStatusBarColorProperty.register(Style);
 export const cssWindowBgColorProperty = new CssProperty<Style, Color>({
     name: 'windowBgColor',
     cssName: 'window-bg-color',
     equalityComparer: Color.equals,
-    valueConverter: (v) => new Color(v),
+    valueConverter: (v) => new Color(v)
 });
 cssWindowBgColorProperty.register(Style);
 export const keepScreenAwakeProperty = new CssProperty<Style, boolean>({
     name: 'keepScreenAwake',
     cssName: 'keep-screen-awake',
-    valueConverter: booleanConverter,
+    valueConverter: booleanConverter
 });
 keepScreenAwakeProperty.register(Style);
 export const screenBrightnessProperty = new CssProperty<Style, number>({
     name: 'screenBrightness',
     cssName: 'screen-brightness',
-    valueConverter: parseFloat,
+    valueConverter: parseFloat
 });
 screenBrightnessProperty.register(Style);
 

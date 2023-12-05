@@ -1,7 +1,7 @@
-import { Color, View, ViewBase } from '@nativescript/core';
+import { Color, Frame, View, ViewBase } from '@nativescript/core';
 import { statusBarStyleProperty } from '@nativescript/core/ui/page';
 import lazy from '@nativescript/core/utils/lazy';
-import { applyMixins, cssNavigationBarColorProperty, cssNavigationBarStyleProperty, cssProperty, cssStatusBarColorProperty, keepScreenAwakeProperty, screenBrightnessProperty } from './systemui-common';
+import { applyMixins, cssNavigationBarColorProperty, cssNavigationBarStyleProperty, cssProperty, cssStatusBarColorProperty, keepScreenAwakeProperty, screenBrightnessProperty } from './index-common';
 
 const isPostLollipop = lazy(() => android.os.Build.VERSION.SDK_INT >= 21);
 
@@ -77,8 +77,7 @@ class PageExtended {
             if (color) {
                 window.addFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setNavigationBarColor(color.android);
-            }
-            else {
+            } else {
                 window.clearFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setNavigationBarColor(0);
             }
@@ -94,11 +93,9 @@ class PageExtended {
                 window.clearFlags(FLAG_TRANSLUCENT_NAVIGATION);
                 decorView.setSystemUiVisibility(uiOptions | SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
                 uiOptions = decorView.getSystemUiVisibility();
-            }
-            else if (value === 'dark') {
+            } else if (value === 'dark') {
                 decorView.setSystemUiVisibility(uiOptions & ~SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-            }
-            else if (value === 'transparent') {
+            } else if (value === 'transparent') {
                 window.addFlags(FLAG_TRANSLUCENT_NAVIGATION);
                 decorView.setSystemUiVisibility(uiOptions & ~SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
             }
@@ -111,16 +108,12 @@ class PageExtended {
             const uiOptions = decorView.getSystemUiVisibility();
             if (value === 'light') {
                 decorView.setSystemUiVisibility(uiOptions | SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-            else if (value === 'dark') {
+            } else if (value === 'dark') {
                 decorView.setSystemUiVisibility(uiOptions & ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-            else if (value === 'transparent') {
-                decorView.setSystemUiVisibility(uiOptions | SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | SYSTEM_UI_FLAG_VISIBLE);
-            }
-            else {
-                decorView.setSystemUiVisibility(uiOptions  | value);
+            } else if (value === 'transparent') {
+                decorView.setSystemUiVisibility(uiOptions | SYSTEM_UI_FLAG_LAYOUT_STABLE | SYSTEM_UI_FLAG_VISIBLE);
+            } else {
+                decorView.setSystemUiVisibility(uiOptions | value);
             }
         }
     }
@@ -140,6 +133,27 @@ class PageExtended {
         window.setAttributes(params);
     }
 }
+
+function updatePagewSystemUI(page: PageExtended2) {
+    if (page.navigationBarColor) {
+        page[cssNavigationBarColorProperty.setNative](page.navigationBarColor);
+    }
+    if (page.navigationBarStyle) {
+        page[cssNavigationBarStyleProperty.setNative](page.navigationBarStyle);
+    }
+    if (page.statusBarStyle) {
+        page[statusBarStyleProperty.setNative](page.statusBarStyle);
+    }
+    if (page.statusBarColor) {
+        page[cssStatusBarColorProperty.setNative](page.statusBarColor);
+    }
+    if (page.keepScreenAwake) {
+        page[keepScreenAwakeProperty.setNative](page.keepScreenAwake);
+    }
+    if (page.screenBrightness) {
+        page[screenBrightnessProperty.setNative](page.screenBrightness);
+    }
+}
 class PageExtended2 {
     navigationBarColor: Color;
     statusBarColor: Color;
@@ -147,26 +161,34 @@ class PageExtended2 {
     navigationBarStyle;
     keepScreenAwake: boolean;
     screenBrightness: number;
+
+    _raiseShowingModallyEvent() {
+        updatePagewSystemUI(this);
+    }
+    _raiseShowingBottomSheetEvent() {
+        updatePagewSystemUI(this);
+    }
+    _raiseClosingModallyEvent() {
+        // if (this.keepScreenAwake) {
+        //     this[keepScreenAwakeProperty.setNative](0);
+        // }
+        const currentPage = Frame.topmost().currentPage;
+        if (currentPage) {
+            updatePagewSystemUI(currentPage as any as PageExtended2);
+        }
+    }
+    _raiseClosedBottomSheetEvent() {
+        // if (this.keepScreenAwake) {
+        //     this[keepScreenAwakeProperty.setNative](0);
+        // }
+        const currentPage = Frame.topmost().currentPage;
+        if (currentPage) {
+            updatePagewSystemUI(currentPage as any as PageExtended2);
+        }
+    }
     public onNavigatingTo(context: any, isBackNavigation: boolean, bindingContext?: any) {
         if (isBackNavigation) {
-            if (this.navigationBarColor) {
-                this[cssNavigationBarColorProperty.setNative](this.navigationBarColor);
-            }
-            if (this.navigationBarStyle) {
-                this[cssNavigationBarStyleProperty.setNative](this.navigationBarStyle);
-            }
-            if (this.statusBarStyle) {
-                this[statusBarStyleProperty.setNative](this.statusBarStyle);
-            }
-            if (this.statusBarColor) {
-                this[cssStatusBarColorProperty.setNative](this.statusBarColor);
-            }
-            if (this.keepScreenAwake) {
-                this[keepScreenAwakeProperty.setNative](this.keepScreenAwake);
-            }
-            if (this.screenBrightness) {
-                this[screenBrightnessProperty.setNative](this.screenBrightness);
-            }
+            updatePagewSystemUI(this);
         }
     }
     onNavigatingFrom(context, isBackNavigation, bindingContext) {

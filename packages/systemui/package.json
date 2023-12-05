@@ -2,9 +2,18 @@
     "name": "@nativescript-community/systemui",
     "version": "1.1.14",
     "description": "Provides API for changing the styles of SystemUI (StatusBar, NavigationBar...) on iOS.",
-    "main": "systemui",
+    "main": "index",
     "sideEffects": false,
-    "typings": "systemui.d.ts",
+    "typings": "index.d.ts",
+    "scripts": {
+        "tsc": "cpy ../../src/systemui/index.d.ts ./ && tsc -d",
+        "build": "npm run tsc",
+        "build.watch": "npm run tsc -- -w",
+        "build.win": "npm run tsc-win",
+        "build.all": "npm run build",
+        "build.angular": "ng-packagr -p ../../src/systemui/angular/ng-package.json -c ../../src/systemui/angular/tsconfig.json",
+        "clean": "rimraf ./*.d.ts ./*.js ./*.js.map"
+    },
     "nativescript": {
         "platforms": {
             "android": "5.0.0",
