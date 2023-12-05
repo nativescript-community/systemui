@@ -3,24 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.16](https://github.com/nativescript-community/systemui/compare/v1.1.15...v1.1.16) (2023-12-05)
+
+**Note:** Version bump only for package systemui
+
 ## [1.1.15](https://github.com/nativescript-community/systemui/compare/v1.1.14...v1.1.15) (2023-02-14)
 
 **Note:** Version bump only for package @nativescript-community/systemui
 
-
-
-
-
 ## [1.1.14](https://github.com/nativescript-community/systemui/compare/v1.1.13...v1.1.14) (2023-02-07)
-
 
 ### Bug Fixes
 
 * **ios:** screenBrightness < 0  mean user defined brightness ([f8e96f7](https://github.com/nativescript-community/systemui/commit/f8e96f7635105e3d3c8bb50ebd7706b369dd24a3))
-
-
-
-
 
 ## [1.1.13](https://github.com/nativescript-community/systemui/compare/v1.1.12...v1.1.13) (2022-10-26)
 

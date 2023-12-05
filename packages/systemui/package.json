@@ -1,6 +1,6 @@
 {
     "name": "@nativescript-community/systemui",
-    "version": "1.1.15",
+    "version": "1.1.16",
     "description": "Provides API for changing the styles of SystemUI (StatusBar, NavigationBar...) on iOS.",
     "main": "index",
     "sideEffects": false,
