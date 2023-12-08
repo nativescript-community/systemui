@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.17](https://github.com/nativescript-community/systemui/compare/v1.1.16...v1.1.17) (2023-12-08)
+
+### Features
+
+* `screenOrientation` property ([9928cd1](https://github.com/nativescript-community/systemui/commit/9928cd1f19f7615da78b579fa8c617e31071688d))
+
 ## [1.1.16](https://github.com/nativescript-community/systemui/compare/v1.1.15...v1.1.16) (2023-12-05)
 
 **Note:** Version bump only for package systemui
