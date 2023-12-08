@@ -10,6 +10,7 @@ declare module '@nativescript/core/ui/page' {
         statusBarColor: Color;
         windowBgColor: Color; // iOS only
         keepScreenAwake: boolean;
+        screenOrientation: 'portrait' | 'landscape' | 'undefined';
         screenBrightness: number;
         showStatusBar(animated?: boolean);
         hideStatusBar(animated?: boolean);

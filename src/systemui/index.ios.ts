@@ -1,8 +1,49 @@
-import { Application, Color, Frame, View } from '@nativescript/core';
+import { Application, Color, Frame, Page, View } from '@nativescript/core';
 import { statusBarStyleProperty } from '@nativescript/core/ui/page';
 import * as common from './index-common';
 
 const STATUSBAR_VIEW_TAG = 3245411;
+
+/**
+ * find the exact object by which the property is owned in the prototype chain
+ * @param object
+ * @param property
+ * @returns {*}
+ */
+
+function findPrototypeForProperty(object, property) {
+    while (false === object.hasOwnProperty(property)) {
+        object = Object.getPrototypeOf(object);
+    }
+    return object;
+}
+let defaultOrientationValue;
+let overridenScreenOrientation;
+function setShouldAutoRotate(page: Page, value) {
+    const prototypeForNavController = findPrototypeForProperty(page.viewController, 'shouldAutorotate');
+    Object.defineProperty(prototypeForNavController, 'shouldAutorotate', {
+        configurable: true,
+        enumerable: false,
+        get() {
+            return value;
+        }
+    });
+}
+export async function setScreenOrientation(page: Page, type: string) {
+    switch (type?.toLowerCase()) {
+        case 'landscape':
+            UIDevice.currentDevice.setValueForKey(UIInterfaceOrientation.LandscapeLeft, 'orientation');
+            setShouldAutoRotate(page, false);
+            break;
+        case 'portrait':
+            UIDevice.currentDevice.setValueForKey(UIInterfaceOrientation.Portrait, 'orientation');
+            setShouldAutoRotate(page, false);
+            break;
+        default:
+            setShouldAutoRotate(page, true);
+            break;
+    }
+}
 
 function updatePagewSystemUI(page: PageExtended) {
     // if (this.navigationBarColor) {
@@ -26,6 +67,11 @@ function updatePagewSystemUI(page: PageExtended) {
     if (page.screenBrightness > 0) {
         page.applyCustomBrightness();
     }
+    if (page.screenOrientation) {
+        setScreenOrientation(page as any as Page, page.screenOrientation);
+    } else {
+        setScreenOrientation(page as any as Page, null);
+    }
 }
 
 let UIViewControllerBasedStatusBarAppearance: boolean;
@@ -35,6 +81,7 @@ class PageExtended {
     @common.cssProperty windowBgColor: Color;
     @common.cssProperty keepScreenAwake: boolean;
     @common.cssProperty screenBrightness: number;
+    @common.cssProperty screenOrientation: string;
 
     savedBrightness;
     didBecomeActiveListener;
@@ -178,6 +225,9 @@ class PageExtended {
         } else {
             this.applyCustomBrightness();
         }
+    }
+    [common.screenOrientationProperty.setNative](value) {
+        setScreenOrientation(this as any as Page, value);
     }
     didBecomeActive() {
         if (this.screenBrightness > 0) {

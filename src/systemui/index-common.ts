@@ -129,6 +129,11 @@ export const screenBrightnessProperty = new CssProperty<Style, number>({
     valueConverter: parseFloat
 });
 screenBrightnessProperty.register(Style);
+export const screenOrientationProperty = new CssProperty({
+    name: 'screenOrientation',
+    cssName: 'screen-orientation'
+});
+screenOrientationProperty.register(Style);
 
 export function findTopView(view: View) {
     while (view.parent) {

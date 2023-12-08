@@ -1,7 +1,16 @@
-import { Color, Frame, View, ViewBase } from '@nativescript/core';
+import { Application, Color, Frame, View, ViewBase } from '@nativescript/core';
 import { SDK_VERSION } from '@nativescript/core/utils';
 import { statusBarStyleProperty } from '@nativescript/core/ui/page';
-import { applyMixins, cssNavigationBarColorProperty, cssNavigationBarStyleProperty, cssProperty, cssStatusBarColorProperty, keepScreenAwakeProperty, screenBrightnessProperty } from './index-common';
+import {
+    applyMixins,
+    cssNavigationBarColorProperty,
+    cssNavigationBarStyleProperty,
+    cssProperty,
+    cssStatusBarColorProperty,
+    keepScreenAwakeProperty,
+    screenBrightnessProperty,
+    screenOrientationProperty
+} from './index-common';
 
 const isPostLollipop = SDK_VERSION >= 21;
 
@@ -26,6 +35,31 @@ declare module '@nativescript/core/ui/core/view-base' {
     interface ViewBase {
         _dialogFragment: androidx.fragment.app.DialogFragment;
     }
+}
+const orientationConstants = {
+    landscape: 6,
+    portrait: 7,
+    all: 10
+};
+
+let defaultOrientationValue;
+let overridenScreenOrientation;
+
+export async function setScreenOrientation(type) {
+    const activity = Application.android.startActivity;
+    if (!activity) {
+        return;
+    }
+    if (defaultOrientationValue === undefined) {
+        defaultOrientationValue = activity.getRequestedOrientation();
+    }
+    type = type?.toLowerCase();
+    let requestedOrientationConstant = defaultOrientationValue;
+    if (type && orientationConstants[type]) {
+        requestedOrientationConstant = orientationConstants[type];
+        overridenScreenOrientation = requestedOrientationConstant;
+    }
+    activity.setRequestedOrientation(requestedOrientationConstant);
 }
 
 async function getPageWindow(view: View): Promise<android.view.Window> {
@@ -53,6 +87,7 @@ class PageExtended {
     @cssProperty statusBarColor: Color;
     @cssProperty keepScreenAwake: boolean;
     @cssProperty screenBrightness: number;
+    @cssProperty screenOrientation: string;
     async showStatusBar(animated) {
         const window = await getPageWindow(this as any);
         const decorView = window.getDecorView();
@@ -132,6 +167,9 @@ class PageExtended {
         params.screenBrightness = value;
         window.setAttributes(params);
     }
+    async [screenOrientationProperty.setNative](value) {
+        setScreenOrientation(value);
+    }
 }
 
 function updatePagewSystemUI(page: PageExtended2) {
@@ -153,6 +191,11 @@ function updatePagewSystemUI(page: PageExtended2) {
     if (page.screenBrightness) {
         page[screenBrightnessProperty.setNative](page.screenBrightness);
     }
+    if (page.screenOrientation) {
+        setScreenOrientation(page.screenOrientation);
+    } else if (overridenScreenOrientation) {
+        setScreenOrientation(null);
+    }
 }
 class PageExtended2 {
     navigationBarColor: Color;
@@ -161,6 +204,7 @@ class PageExtended2 {
     navigationBarStyle;
     keepScreenAwake: boolean;
     screenBrightness: number;
+    screenOrientation: string;
 
     _raiseShowingModallyEvent() {
         updatePagewSystemUI(this);
