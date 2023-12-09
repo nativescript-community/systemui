@@ -64,21 +64,22 @@ export async function setScreenOrientation(type) {
 
 async function getPageWindow(view: View): Promise<android.view.Window> {
     let topView: ViewBase = view.page;
-    while (topView.parent) {
+    while (topView.parent || topView._dialogFragment) {
+        if (topView._dialogFragment) {
+            const dialog = topView._dialogFragment.getDialog();
+            if (dialog) {
+                return dialog.getWindow();
+            } else {
+                return new Promise((resolve) => {
+                    topView.once(View.shownModallyEvent, () => {
+                        resolve(topView._dialogFragment.getDialog().getWindow());
+                    });
+                });
+            }
+        }
         topView = topView.parent;
     }
-    if (topView && topView._dialogFragment) {
-        const dialog = topView._dialogFragment.getDialog();
-        if (dialog) {
-            return dialog.getWindow();
-        } else {
-            return new Promise((resolve) => {
-                topView.once(View.shownModallyEvent, () => {
-                    resolve(topView._dialogFragment.getDialog().getWindow());
-                });
-            });
-        }
-    }
+
     return topView._context.getWindow();
 }
 
