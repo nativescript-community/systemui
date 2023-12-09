@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.18](https://github.com/nativescript-community/systemui/compare/v1.1.17...v1.1.18) (2023-12-09)
+
+### Bug Fixes
+
+* **android:** `statusBarStyle` and other props not being applied on modal dialog ([2448c3f](https://github.com/nativescript-community/systemui/commit/2448c3f4736ce596b02f1ed8a71ffc1ed68023b2))
+
 ## [1.1.17](https://github.com/nativescript-community/systemui/compare/v1.1.16...v1.1.17) (2023-12-08)
 
 ### Features
