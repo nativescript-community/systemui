@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.19](https://github.com/nativescript-community/systemui/compare/v1.1.18...v1.1.19) (2023-12-11)
+
+### Bug Fixes
+
+* **ios:** crash fix ([8ddc2f7](https://github.com/nativescript-community/systemui/commit/8ddc2f7789bdd21cb191bdd4c2c75115d832e881))
+
 ## [1.1.18](https://github.com/nativescript-community/systemui/compare/v1.1.17...v1.1.18) (2023-12-09)
 
 ### Bug Fixes
