@@ -46,6 +46,9 @@ export async function setScreenOrientation(page: Page, type: string) {
 }
 
 function updatePagewSystemUI(page: PageExtended) {
+    if (!page) {
+        return;
+    }
     // if (this.navigationBarColor) {
     //     this[cssNavigationBarColorProperty.setNative](this.navigationBarColor);
     // }
@@ -56,9 +59,6 @@ function updatePagewSystemUI(page: PageExtended) {
         page.setStatusBarColor(page.statusBarColor);
     }
     if (page.windowBgColor) {
-        page.setWindowBgColor(page.windowBgColor);
-    }
-    if (this.windowBgColor) {
         page.setWindowBgColor(page.windowBgColor);
     }
     if (page.keepScreenAwake) {
