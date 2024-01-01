@@ -217,7 +217,7 @@ class PageExtended2 {
         // if (this.keepScreenAwake) {
         //     this[keepScreenAwakeProperty.setNative](0);
         // }
-        const currentPage = Frame.topmost().currentPage;
+        const currentPage = Frame.topmost()?.currentPage;
         if (currentPage) {
             updatePagewSystemUI(currentPage as any as PageExtended2);
         }
@@ -226,7 +226,7 @@ class PageExtended2 {
         // if (this.keepScreenAwake) {
         //     this[keepScreenAwakeProperty.setNative](0);
         // }
-        const currentPage = Frame.topmost().currentPage;
+        const currentPage = Frame.topmost()?.currentPage;
         if (currentPage) {
             updatePagewSystemUI(currentPage as any as PageExtended2);
         }
