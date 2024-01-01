@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.20](https://github.com/nativescript-community/systemui/compare/v1.1.19...v1.1.20) (2024-01-01)
+
+### Bug Fixes
+
+* error fix when quitting app while showing modal ([bdf738d](https://github.com/nativescript-community/systemui/commit/bdf738d027738ed5655ed133e5b5d5ced8cc434d))
+
 ## [1.1.19](https://github.com/nativescript-community/systemui/compare/v1.1.18...v1.1.19) (2023-12-11)
 
 ### Bug Fixes
