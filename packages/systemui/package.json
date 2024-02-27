@@ -11,7 +11,7 @@
         "build.watch": "npm run tsc -- -w",
         "build.win": "npm run tsc-win",
         "build.all": "npm run build",
-        "build.angular": "ng-packagr -p ../../src/systemui/angular/ng-package.json -c ../../src/systemui/angular/tsconfig.json",
+        "build.angular": "ng-packagr -p ../../src/systemui/angular/ng-package.json -c ../../src/systemui/angular/tsconfig.json && rm angular/.npmignore",
         "clean": "rimraf ./*.d.ts ./*.js ./*.js.map"
     },
     "nativescript": {
