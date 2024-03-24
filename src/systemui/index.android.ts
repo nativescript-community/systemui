@@ -1,4 +1,4 @@
-import { Application, Color, Frame, View, ViewBase } from '@nativescript/core';
+import { Application, Color, Frame, Page, View, ViewBase } from '@nativescript/core';
 import { SDK_VERSION } from '@nativescript/core/utils';
 import { statusBarStyleProperty } from '@nativescript/core/ui/page';
 import {
@@ -9,10 +9,13 @@ import {
     cssStatusBarColorProperty,
     keepScreenAwakeProperty,
     screenBrightnessProperty,
-    screenOrientationProperty
+    screenOrientationProperty,
+    statusBarHiddenProperty
 } from './index-common';
 
 const isPostLollipop = SDK_VERSION >= 21;
+
+let defaultStatusBarHidden: boolean;
 
 const SYSTEM_UI_FLAG_LIGHT_STATUS_BAR = 0x00002000;
 const SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR = 0x00000010;
@@ -89,18 +92,7 @@ class PageExtended {
     @cssProperty keepScreenAwake: boolean;
     @cssProperty screenBrightness: number;
     @cssProperty screenOrientation: string;
-    async showStatusBar(animated) {
-        const window = await getPageWindow(this as any);
-        const decorView = window.getDecorView();
-        const uiOptions = decorView.getSystemUiVisibility();
-        window.getDecorView().setSystemUiVisibility(uiOptions | SYSTEM_UI_FLAG_VISIBLE);
-    }
-    async hideStatusBar(animated) {
-        const window = await getPageWindow(this as any);
-        const decorView = window.getDecorView();
-        const uiOptions = decorView.getSystemUiVisibility();
-        window.getDecorView().setSystemUiVisibility((uiOptions | 0x00000004) & ~SYSTEM_UI_FLAG_VISIBLE);
-    }
+
     async [cssStatusBarColorProperty.setNative](color: Color) {
         if (isPostLollipop) {
             const window = await getPageWindow(this as any);
@@ -174,6 +166,7 @@ class PageExtended {
 }
 
 function updatePagewSystemUI(page: PageExtended2) {
+    page.checkStatusBarVisibility();
     if (page.navigationBarColor) {
         page[cssNavigationBarColorProperty.setNative](page.navigationBarColor);
     }
@@ -201,11 +194,48 @@ function updatePagewSystemUI(page: PageExtended2) {
 class PageExtended2 {
     navigationBarColor: Color;
     statusBarColor: Color;
+    @cssProperty statusBarHidden: boolean;
     statusBarStyle;
     navigationBarStyle;
     keepScreenAwake: boolean;
     screenBrightness: number;
     screenOrientation: string;
+
+    async setStatusBarVisibility(value: boolean) {
+        const window = await getPageWindow(this as any);
+        const decorView = window.getDecorView();
+        const uiOptions = decorView.getSystemUiVisibility();
+        window.getDecorView().setSystemUiVisibility(value ? uiOptions | SYSTEM_UI_FLAG_VISIBLE : (uiOptions | 0x00000004) & ~SYSTEM_UI_FLAG_VISIBLE);
+    }
+    async checkStatusBarVisibility() {
+        if (defaultStatusBarHidden === undefined) {
+            const page = this as any as Page;
+            const view = page.parent ?? this;
+            let window: android.view.Window;
+            const dialogFragment = (view as any)._dialogFragment;
+            if (dialogFragment) {
+                const dialog = dialogFragment.getDialog();
+                if (dialog) {
+                    window = dialog.getWindow();
+                }
+            }
+            window = window || page._context.getWindow();
+            if (window) {
+                const rect = new android.graphics.Rect();
+                window.getDecorView().getWindowVisibleDisplayFrame(rect);
+                defaultStatusBarHidden = rect.top === 0;
+            } else {
+                defaultStatusBarHidden = false;
+            }
+        }
+        this.setStatusBarVisibility(!(this.statusBarHidden ?? defaultStatusBarHidden));
+    }
+    async showStatusBar(animated) {
+        this.setStatusBarVisibility(true);
+    }
+    async hideStatusBar(animated) {
+        this.setStatusBarVisibility(false);
+    }
 
     _raiseShowingModallyEvent() {
         updatePagewSystemUI(this);
@@ -241,6 +271,10 @@ class PageExtended2 {
         if (this.keepScreenAwake) {
             this[keepScreenAwakeProperty.setNative](0);
         }
+    }
+
+    async [statusBarHiddenProperty.setNative](value) {
+        this.setStatusBarVisibility(value);
     }
 }
 

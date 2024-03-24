@@ -1,6 +1,17 @@
 import { Application, Color, Frame, Page, View } from '@nativescript/core';
 import { statusBarStyleProperty } from '@nativescript/core/ui/page';
-import * as common from './index-common';
+import { SDK_VERSION } from '@nativescript/core/utils';
+import {
+    applyMixins,
+    cssProperty,
+    cssStatusBarColorProperty,
+    cssWindowBgColorProperty,
+    findTopView,
+    keepScreenAwakeProperty,
+    screenBrightnessProperty,
+    screenOrientationProperty,
+    statusBarHiddenProperty
+} from './index-common';
 
 const STATUSBAR_VIEW_TAG = 3245411;
 
@@ -66,6 +77,7 @@ export async function setScreenOrientation(page: Page, type: string) {
     }
 }
 
+let defaultStatusBarHidden: boolean;
 function updatePagewSystemUI(page: PageExtended) {
     if (!page) {
         return;
@@ -73,6 +85,7 @@ function updatePagewSystemUI(page: PageExtended) {
     // if (this.navigationBarColor) {
     //     this[cssNavigationBarColorProperty.setNative](this.navigationBarColor);
     // }
+    page.checkStatusBarVisibility();
     if (page.statusBarStyle) {
         page.updateStatusBar();
     }
@@ -83,7 +96,7 @@ function updatePagewSystemUI(page: PageExtended) {
         page.setWindowBgColor(page.windowBgColor);
     }
     if (page.keepScreenAwake) {
-        page[common.keepScreenAwakeProperty.setNative](page.keepScreenAwake);
+        page[keepScreenAwakeProperty.setNative](page.keepScreenAwake);
     }
     if (page.screenBrightness > 0) {
         page.applyCustomBrightness();
@@ -97,12 +110,13 @@ function updatePagewSystemUI(page: PageExtended) {
 
 let UIViewControllerBasedStatusBarAppearance: boolean;
 class PageExtended {
-    @common.cssProperty navigationBarColor: Color;
-    @common.cssProperty statusBarColor: Color;
-    @common.cssProperty windowBgColor: Color;
-    @common.cssProperty keepScreenAwake: boolean;
-    @common.cssProperty screenBrightness: number;
-    @common.cssProperty screenOrientation: string;
+    @cssProperty navigationBarColor: Color;
+    @cssProperty statusBarColor: Color;
+    @cssProperty statusBarHidden: boolean;
+    @cssProperty windowBgColor: Color;
+    @cssProperty keepScreenAwake: boolean;
+    @cssProperty screenBrightness: number;
+    @cssProperty screenOrientation: string;
 
     savedBrightness;
     didBecomeActiveListener;
@@ -110,31 +124,33 @@ class PageExtended {
     statusBarStyle;
 
     frame: Frame; // defined in View
-
-    showStatusBar(animated = true) {
-        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(false, animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None);
+    setStatusBarVisibility(value: boolean, animated = true, duration = 200) {
+        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(!value, animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None);
         const statusBarView = this.getStatusBarView();
         if (statusBarView) {
-            UIView.animateWithDurationAnimations(0.4, () => {
-                statusBarView.alpha = 1;
-            });
-        } else {
-            statusBarView.alpha = 1;
+            if (animated) {
+                UIView.animateWithDurationAnimations(duration / 1000, () => {
+                    statusBarView.alpha = value ? 1 : 0;
+                });
+            } else {
+                statusBarView.alpha = value ? 1 : 0;
+            }
         }
+    }
+    checkStatusBarVisibility() {
+        if (defaultStatusBarHidden === undefined) {
+            defaultStatusBarHidden = UIApplication.sharedApplication.statusBarHidden;
+        }
+        this.setStatusBarVisibility(!(this.statusBarHidden ?? UIApplication.sharedApplication.statusBarHidden));
+    }
+    showStatusBar(animated = true) {
+        this.setStatusBarVisibility(true, animated);
     }
     hideStatusBar(animated = true) {
-        UIApplication.sharedApplication.setStatusBarHiddenWithAnimation(true, animated ? UIStatusBarAnimation.Slide : UIStatusBarAnimation.None);
-        const statusBarView = this.getStatusBarView();
-        if (statusBarView) {
-            UIView.animateWithDurationAnimations(0.2, () => {
-                statusBarView.alpha = 0;
-            });
-        } else {
-            statusBarView.alpha = 0;
-        }
+        this.setStatusBarVisibility(false, animated);
     }
     getStatusBarView(): UIView {
-        const topParent = common.findTopView(this as any);
+        const topParent = findTopView(this as any);
         const viewController = topParent.viewController as UIViewController;
         const topView = viewController.view.superview;
         if (topView) {
@@ -143,7 +159,7 @@ class PageExtended {
         return null;
     }
     hideStatusBarColor() {
-        const topParent = common.findTopView(this as any);
+        const topParent = findTopView(this as any);
         const viewController = topParent.viewController;
         const topView = viewController && viewController.view.superview;
         if (topView) {
@@ -154,7 +170,7 @@ class PageExtended {
         }
     }
     setStatusBarColor(color: Color) {
-        const topParent = common.findTopView(this as any);
+        const topParent = findTopView(this as any);
         const viewController = topParent.viewController as UIViewController;
         if (viewController.modalPresentationStyle === UIModalPresentationStyle.FormSheet) {
             return null;
@@ -174,6 +190,7 @@ class PageExtended {
                 statusBarView.tag = STATUSBAR_VIEW_TAG;
                 statusBarView.autoresizingMask = 2 /* FlexibleWidth */ | 32 /* FlexibleBottomMargin */;
                 statusBarView.autoresizesSubviews = true;
+                statusBarView.userInteractionEnabled = false;
                 topView.addSubview(statusBarView);
             }
             if (statusBarView) {
@@ -194,8 +211,11 @@ class PageExtended {
             firstWindow.backgroundColor = color ? color.ios : null;
         }
     }
-    [common.cssStatusBarColorProperty.setNative](color: Color) {
+    [cssStatusBarColorProperty.setNative](color: Color) {
         this.setStatusBarColor(color);
+    }
+    [statusBarHiddenProperty.setNative](value: boolean) {
+        this.setStatusBarVisibility(!value, true);
     }
     public _updateStatusBarStyle(value?: string) {
         const frame = this.frame;
@@ -224,10 +244,10 @@ class PageExtended {
     [statusBarStyleProperty.setNative](value) {
         this._updateStatusBarStyle(value);
     }
-    [common.cssWindowBgColorProperty.setNative](value) {
+    [cssWindowBgColorProperty.setNative](value) {
         this.setWindowBgColor(value);
     }
-    [common.keepScreenAwakeProperty.setNative](value) {
+    [keepScreenAwakeProperty.setNative](value) {
         if (value) {
             const app = UIApplication.sharedApplication;
             if (!app.idleTimerDisabled) {
@@ -240,14 +260,14 @@ class PageExtended {
             }
         }
     }
-    [common.screenBrightnessProperty.setNative](value) {
+    [screenBrightnessProperty.setNative](value) {
         if (value < 0) {
             this.resetCustomBrightness();
         } else {
             this.applyCustomBrightness();
         }
     }
-    [common.screenOrientationProperty.setNative](value) {
+    [screenOrientationProperty.setNative](value) {
         setScreenOrientation(this as any as Page, value);
     }
     didBecomeActive() {
@@ -324,7 +344,7 @@ class PageExtended {
 let mixinInstalled = false;
 export function overridePageBase() {
     const NSPage = require('@nativescript/core/ui/page').Page;
-    common.applyMixins(NSPage, [PageExtended]);
+    applyMixins(NSPage, [PageExtended]);
 }
 
 function getAppDelegate() {

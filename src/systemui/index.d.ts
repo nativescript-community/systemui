@@ -8,11 +8,14 @@ declare module '@nativescript/core/ui/page' {
         navigationBarStyle: 'light' | 'dark' | 'transparent'; // Android only
         statusBarStyle: 'light' | 'dark'; // transparent added for Android
         statusBarColor: Color;
+        statusBarHidden: boolean;
         windowBgColor: Color; // iOS only
         keepScreenAwake: boolean;
         screenOrientation: 'portrait' | 'landscape' | 'undefined';
         screenBrightness: number;
         showStatusBar(animated?: boolean);
         hideStatusBar(animated?: boolean);
+        setStatusBarVisibility(value: boolean, animated?: boolean);
+        checkStatusBarVisibility();
     }
 }
