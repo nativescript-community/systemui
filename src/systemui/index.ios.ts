@@ -30,18 +30,39 @@ function setShouldAutoRotate(page: Page, value) {
     });
 }
 export async function setScreenOrientation(page: Page, type: string) {
-    switch (type?.toLowerCase()) {
-        case 'landscape':
-            UIDevice.currentDevice.setValueForKey(UIInterfaceOrientation.LandscapeLeft, 'orientation');
-            setShouldAutoRotate(page, false);
-            break;
-        case 'portrait':
-            UIDevice.currentDevice.setValueForKey(UIInterfaceOrientation.Portrait, 'orientation');
-            setShouldAutoRotate(page, false);
-            break;
-        default:
-            setShouldAutoRotate(page, true);
-            break;
+    if (SDK_VERSION >= 16) {
+        let mask: UIInterfaceOrientationMask;
+        switch (type?.toLowerCase()) {
+            case 'landscape':
+                mask = UIInterfaceOrientationMask.Landscape;
+                break;
+            case 'portrait':
+                mask = UIInterfaceOrientationMask.Portrait;
+
+                break;
+            default:
+                mask = UIInterfaceOrientationMask.All;
+                break;
+        }
+        const windowScene = UIApplication.sharedApplication.connectedScenes.anyObject() as UIWindowScene;
+        windowScene?.requestGeometryUpdateWithPreferencesErrorHandler(UIWindowSceneGeometryPreferencesIOS.alloc().initWithInterfaceOrientations(mask), (error) => {
+            console.error(error);
+        });
+        UIViewController.attemptRotationToDeviceOrientation();
+    } else {
+        switch (type?.toLowerCase()) {
+            case 'landscape':
+                UIDevice.currentDevice.setValueForKey(UIInterfaceOrientation.LandscapeLeft, 'orientation');
+                setShouldAutoRotate(page, false);
+                break;
+            case 'portrait':
+                UIDevice.currentDevice.setValueForKey(UIInterfaceOrientation.Portrait, 'orientation');
+                setShouldAutoRotate(page, false);
+                break;
+            default:
+                setShouldAutoRotate(page, true);
+                break;
+        }
     }
 }
 
