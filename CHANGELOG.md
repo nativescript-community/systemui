@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.21](https://github.com/nativescript-community/systemui/compare/v1.1.20...v1.1.21) (2024-03-24)
+
+### Bug Fixes
+
+* **ios:** screenOrientation fix for ios >= 16 ([7f78363](https://github.com/nativescript-community/systemui/commit/7f783636ba9f45c12702193e6bc8f4efc470f6fe))
+
+### Features
+
+* statusBarHidden property ([cc30cad](https://github.com/nativescript-community/systemui/commit/cc30cad143b6ff19db7ba78b240eed6524561c5f))
+
 ## [1.1.20](https://github.com/nativescript-community/systemui/compare/v1.1.19...v1.1.20) (2024-01-01)
 
 ### Bug Fixes
