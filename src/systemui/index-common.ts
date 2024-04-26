@@ -110,6 +110,12 @@ export const cssStatusBarColorProperty = new CssProperty<Style, Color>({
     valueConverter: (v) => new Color(v)
 });
 cssStatusBarColorProperty.register(Style);
+export const statusBarHiddenProperty = new CssProperty<Style, boolean>({
+    name: 'statusBarHidden',
+    cssName: 'status-bar-hidden',
+    valueConverter: booleanConverter
+});
+statusBarHiddenProperty.register(Style);
 export const cssWindowBgColorProperty = new CssProperty<Style, Color>({
     name: 'windowBgColor',
     cssName: 'window-bg-color',
