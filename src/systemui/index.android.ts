@@ -65,6 +65,14 @@ export async function setScreenOrientation(type) {
     activity.setRequestedOrientation(requestedOrientationConstant);
 }
 
+let currentScreenBrightness = -1;
+export async function setScreenBrightness(page, value) {
+    const window = await getPageWindow(page);
+    const params = window.getAttributes();
+    params.screenBrightness = currentScreenBrightness = value;
+    window.setAttributes(params);
+}
+
 async function getPageWindow(view: View): Promise<android.view.Window> {
     let topView: ViewBase = view.page;
     while (topView.parent || topView._dialogFragment) {
@@ -155,10 +163,7 @@ class PageExtended {
         }
     }
     async [screenBrightnessProperty.setNative](value) {
-        const window = await getPageWindow(this as any);
-        const params = window.getAttributes();
-        params.screenBrightness = value;
-        window.setAttributes(params);
+        setScreenBrightness(this, value);
     }
     async [screenOrientationProperty.setNative](value) {
         setScreenOrientation(value);
@@ -184,6 +189,8 @@ function updatePagewSystemUI(page: PageExtended2) {
     }
     if (page.screenBrightness) {
         page[screenBrightnessProperty.setNative](page.screenBrightness);
+    } else if (currentScreenBrightness !== -1) {
+        setScreenBrightness(page, -1);
     }
     if (page.screenOrientation) {
         setScreenOrientation(page.screenOrientation);
