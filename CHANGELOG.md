@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.22](https://github.com/nativescript-community/systemui/compare/v1.1.21...v1.1.22) (2024-06-01)
+
+### Bug Fixes
+
+* **android:** reset screenBrightness on navigation back or forward ([3f28f4e](https://github.com/nativescript-community/systemui/commit/3f28f4e26ee50877453c5a15ae63bee7b8f9e4db))
+
 ## [1.1.21](https://github.com/nativescript-community/systemui/compare/v1.1.20...v1.1.21) (2024-03-24)
 
 ### Bug Fixes
