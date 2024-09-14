@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.23](https://github.com/nativescript-community/systemui/compare/v1.1.22...v1.1.23) (2024-09-14)
+
+### Bug Fixes
+
+* **android:** reset navigationBarColor if navigating back to a page without the property ([1b46cb1](https://github.com/nativescript-community/systemui/commit/1b46cb1434eb73497710401e91155a9be6e82f20))
+
 ## [1.1.22](https://github.com/nativescript-community/systemui/compare/v1.1.21...v1.1.22) (2024-06-01)
 
 ### Bug Fixes
