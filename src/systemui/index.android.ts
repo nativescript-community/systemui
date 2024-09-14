@@ -114,7 +114,7 @@ class PageExtended {
                 window.addFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setNavigationBarColor(color.android);
             } else {
-                window.clearFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                // window.clearFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setNavigationBarColor(0);
             }
         }
@@ -172,9 +172,9 @@ class PageExtended {
 
 function updatePagewSystemUI(page: PageExtended2) {
     page.checkStatusBarVisibility();
-    if (page.navigationBarColor) {
+    // if (page.navigationBarColor) {
         page[cssNavigationBarColorProperty.setNative](page.navigationBarColor);
-    }
+    // }
     if (page.navigationBarStyle) {
         page[cssNavigationBarStyleProperty.setNative](page.navigationBarStyle);
     }
