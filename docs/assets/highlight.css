@@ -9,20 +9,10 @@
     --dark-hl-3: #CE9178;
     --light-hl-4: #795E26;
     --dark-hl-4: #DCDCAA;
-    --light-hl-5: #800000;
-    --dark-hl-5: #808080;
-    --light-hl-6: #800000;
-    --dark-hl-6: #569CD6;
-    --light-hl-7: #E50000;
-    --dark-hl-7: #9CDCFE;
-    --light-hl-8: #0000FF;
-    --dark-hl-8: #CE9178;
-    --light-hl-9: #008000;
-    --dark-hl-9: #6A9955;
-    --light-hl-10: #CD3131;
-    --dark-hl-10: #F44747;
-    --light-hl-11: #000000;
-    --dark-hl-11: #C8C8C8;
+    --light-hl-5: #008000;
+    --dark-hl-5: #6A9955;
+    --light-hl-6: #000000;
+    --dark-hl-6: #C8C8C8;
     --light-code-background: #FFFFFF;
     --dark-code-background: #1E1E1E;
 }
@@ -35,11 +25,6 @@
     --hl-4: var(--light-hl-4);
     --hl-5: var(--light-hl-5);
     --hl-6: var(--light-hl-6);
-    --hl-7: var(--light-hl-7);
-    --hl-8: var(--light-hl-8);
-    --hl-9: var(--light-hl-9);
-    --hl-10: var(--light-hl-10);
-    --hl-11: var(--light-hl-11);
     --code-background: var(--light-code-background);
 } }
 
@@ -51,11 +36,6 @@
     --hl-4: var(--dark-hl-4);
     --hl-5: var(--dark-hl-5);
     --hl-6: var(--dark-hl-6);
-    --hl-7: var(--dark-hl-7);
-    --hl-8: var(--dark-hl-8);
-    --hl-9: var(--dark-hl-9);
-    --hl-10: var(--dark-hl-10);
-    --hl-11: var(--dark-hl-11);
     --code-background: var(--dark-code-background);
 } }
 
@@ -67,11 +47,6 @@
     --hl-4: var(--light-hl-4);
     --hl-5: var(--light-hl-5);
     --hl-6: var(--light-hl-6);
-    --hl-7: var(--light-hl-7);
-    --hl-8: var(--light-hl-8);
-    --hl-9: var(--light-hl-9);
-    --hl-10: var(--light-hl-10);
-    --hl-11: var(--light-hl-11);
     --code-background: var(--light-code-background);
 }
 
@@ -83,11 +58,6 @@
     --hl-4: var(--dark-hl-4);
     --hl-5: var(--dark-hl-5);
     --hl-6: var(--dark-hl-6);
-    --hl-7: var(--dark-hl-7);
-    --hl-8: var(--dark-hl-8);
-    --hl-9: var(--dark-hl-9);
-    --hl-10: var(--dark-hl-10);
-    --hl-11: var(--dark-hl-11);
     --code-background: var(--dark-code-background);
 }
 
@@ -98,9 +68,4 @@
 .hl-4 { color: var(--hl-4); }
 .hl-5 { color: var(--hl-5); }
 .hl-6 { color: var(--hl-6); }
-.hl-7 { color: var(--hl-7); }
-.hl-8 { color: var(--hl-8); }
-.hl-9 { color: var(--hl-9); }
-.hl-10 { color: var(--hl-10); }
-.hl-11 { color: var(--hl-11); }
 pre, code { background: var(--code-background); }
