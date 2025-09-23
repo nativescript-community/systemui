@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.24](https://github.com/nativescript-community/systemui/compare/v1.1.23...v1.1.24) (2025-09-23)
+
+### Bug Fixes
+
+* **ios:** screenOrientation fix for ipadOS ([b86488a](https://github.com/nativescript-community/systemui/commit/b86488ad3f4df19bfa321d96112b7cd9f56a52ff))
+
 ## [1.1.23](https://github.com/nativescript-community/systemui/compare/v1.1.22...v1.1.23) (2024-09-14)
 
 ### Bug Fixes
