@@ -28,11 +28,19 @@ function findPrototypeForProperty(object, property) {
     }
     return object;
 }
-let defaultOrientationValue;
-let overridenScreenOrientation;
 function setShouldAutoRotate(page: Page, value) {
     const prototypeForNavController = findPrototypeForProperty(page.viewController, 'shouldAutorotate');
     Object.defineProperty(prototypeForNavController, 'shouldAutorotate', {
+        configurable: true,
+        enumerable: false,
+        get() {
+            return value;
+        }
+    });
+}
+function setSupportedInterfaceOrientations(page, value) {
+    const prototypeForNavController = findPrototypeForProperty(page.viewController, 'supportedInterfaceOrientations');
+    Object.defineProperty(prototypeForNavController, 'supportedInterfaceOrientations', {
         configurable: true,
         enumerable: false,
         get() {
@@ -55,11 +63,17 @@ export async function setScreenOrientation(page: Page, type: string) {
                 mask = UIInterfaceOrientationMask.All;
                 break;
         }
-        const windowScene = UIApplication.sharedApplication.connectedScenes.anyObject() as UIWindowScene;
+        setSupportedInterfaceOrientations(page, mask);
+        const viewController = page.viewController;
+        const windowScene: UIWindowScene = page.nativeViewProtected?.window?.windowScene ?? UIApplication.sharedApplication.connectedScenes.anyObject();
         windowScene?.requestGeometryUpdateWithPreferencesErrorHandler(UIWindowSceneGeometryPreferencesIOS.alloc().initWithInterfaceOrientations(mask), (error) => {
             console.error(error);
         });
-        UIViewController.attemptRotationToDeviceOrientation();
+        if (viewController && viewController.setNeedsUpdateOfSupportedInterfaceOrientations) {
+            viewController.setNeedsUpdateOfSupportedInterfaceOrientations();
+        } else {
+            UIViewController.attemptRotationToDeviceOrientation();
+        }
     } else {
         switch (type?.toLowerCase()) {
             case 'landscape':
