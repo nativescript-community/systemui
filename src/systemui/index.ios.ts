@@ -1,5 +1,4 @@
 import { Application, Color, Frame, Page, View } from '@nativescript/core';
-import { statusBarStyleProperty } from '@nativescript/core/ui/page';
 import { SDK_VERSION } from '@nativescript/core/utils';
 import {
     applyMixins,
@@ -10,7 +9,8 @@ import {
     keepScreenAwakeProperty,
     screenBrightnessProperty,
     screenOrientationProperty,
-    statusBarHiddenProperty
+    statusBarHiddenProperty,
+    statusBarStyleProperty
 } from './index-common';
 
 const STATUSBAR_VIEW_TAG = 3245411;

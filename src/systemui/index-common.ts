@@ -140,6 +140,11 @@ export const screenOrientationProperty = new CssProperty({
     cssName: 'screen-orientation'
 });
 screenOrientationProperty.register(Style);
+export const statusBarStyleProperty = new CssProperty<Style, string>({
+    name: 'statusBarStyle',
+    cssName: 'status-bar-style'
+});
+statusBarStyleProperty.register(Style);
 
 export function findTopView(view: View) {
     while (view.parent) {
