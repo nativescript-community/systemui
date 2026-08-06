@@ -124,6 +124,9 @@ function updatePagewSystemUI(page: PageExtended) {
 
 let UIViewControllerBasedStatusBarAppearance: boolean;
 class PageExtended {
+    //TODO: remove as it needs to be added after TS 5.7 change https://github.com/microsoft/TypeScript/pull/59860
+    [key: symbol]: (...args: any[]) => any | void;
+
     @cssProperty navigationBarColor: Color;
     @cssProperty statusBarColor: Color;
     @cssProperty statusBarHidden: boolean;
