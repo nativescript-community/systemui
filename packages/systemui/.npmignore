@@ -1,5 +1,11 @@
-*.map
+node_modules/
+pnpm-global/
+bin/
+hooks/
 *.ts
-!*.d.ts
+*.old
 tsconfig.json
-sync
+!*.d.ts
+*.aar
+*.jar
+blueprint.md
