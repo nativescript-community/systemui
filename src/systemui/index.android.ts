@@ -244,7 +244,7 @@ class PageExtended2 {
         this.setStatusBarVisibility(false);
     }
 
-    _raiseShowingModallyEvent() {
+    _raiseShownModallyEvent() {
         updatePagewSystemUI(this);
     }
     _raiseShowingBottomSheetEvent() {
