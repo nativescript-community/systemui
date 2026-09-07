@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.25](https://github.com/nativescript-community/systemui/compare/v1.1.24...v1.1.25) (2026-09-07)
+
+### Bug Fixes
+
+* android fix for modals where updatePagewSystemUI could be triggered too soon ([e924c42](https://github.com/nativescript-community/systemui/commit/e924c42843b0ba488f5cc3a664f1253e350d9316))
+
 ## [1.1.24](https://github.com/nativescript-community/systemui/compare/v1.1.23...v1.1.24) (2025-09-23)
 
 ### Bug Fixes
