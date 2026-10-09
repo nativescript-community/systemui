@@ -137,6 +137,11 @@ class PageExtended {
             }
         }
     }
+    // core version (called on load) stores the value as a local style value,
+    // which would then shadow any css change (like a light/dark theme switch)
+    updateStatusBarStyle(value) {
+        return this[statusBarStyleProperty.setNative](value);
+    }
     async [statusBarStyleProperty.setNative](value) {
         if (isPostLollipop) {
             const window = await getPageWindow(this as any);

@@ -362,6 +362,9 @@ let mixinInstalled = false;
 export function overridePageBase() {
     const NSPage = require('@nativescript/core/ui/page').Page;
     applyMixins(NSPage, [PageExtended]);
+    // replace instead of wrap: core setNative stores the value as a local style value,
+    // which would then shadow any css change (like a light/dark theme switch)
+    NSPage.prototype[statusBarStyleProperty.setNative] = PageExtended.prototype[statusBarStyleProperty.setNative];
 }
 
 function getAppDelegate() {
