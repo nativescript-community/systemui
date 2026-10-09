@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.26](https://github.com/nativescript-community/systemui/compare/v1.1.25...v1.1.26) (2026-10-09)
+
+### Bug Fixes
+
+* apply page status bar style css changes live ([0c6f719](https://github.com/nativescript-community/systemui/commit/0c6f719dd47ed1d4f677cfcab9936ee5566da929))
+
 ## [1.1.25](https://github.com/nativescript-community/systemui/compare/v1.1.24...v1.1.25) (2026-09-07)
 
 ### Bug Fixes
